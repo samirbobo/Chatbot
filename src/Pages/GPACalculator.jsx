@@ -11,11 +11,5 @@ export default function GPACalculator() {
       clearTimeout(time);
     };
   }, []);
-  return loading ? (
-    <div className="center-loading">
-      <Loading />
-    </div>
-  ) : (
-    <h2>GPA Calculator Page</h2>
-  );
+  return loading ? <Loading /> : <h2>GPA Calculator Page</h2>;
 }

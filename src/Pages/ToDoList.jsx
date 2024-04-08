@@ -11,11 +11,5 @@ export default function ToDoList() {
       clearTimeout(time);
     };
   }, []);
-  return loading ? (
-    <div className="center-loading">
-      <Loading />
-    </div>
-  ) : (
-    <h2>To Do List Page</h2>
-  );
+  return loading ? <Loading /> : <h2>To Do List Page</h2>;
 }

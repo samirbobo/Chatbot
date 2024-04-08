@@ -11,11 +11,5 @@ export default function Setting() {
       clearTimeout(time);
     };
   }, []);
-  return loading ? (
-    <div className="center-loading">
-      <Loading />
-    </div>
-  ) : (
-    <h2>Setting page</h2>
-  );
+  return loading ? <Loading /> : <h2>Setting page</h2>;
 }

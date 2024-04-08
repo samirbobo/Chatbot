@@ -14,15 +14,15 @@ export default function PrivateRoute() {
     return <Navigate to="/login" />;
   } else {
     return (
-      <div className={`container-layout ${openSidebar && "active"}`}>
+      <>
         <Sidebar
           handleShowSidebar={handleShowSidebar}
           openSidebar={openSidebar}
         />
-        <section className="main-section">
+        <main className={`main-section ${openSidebar && "active"}`}>
           <Outlet />
-        </section>
-      </div>
+        </main>
+      </>
     );
   }
 }

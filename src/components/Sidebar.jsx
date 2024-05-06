@@ -12,7 +12,6 @@ import avater from "../images/avater.png";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
   const { logout, user } = UseGlobalUser();
-  console.log(user)
   return (
     <aside className={`sidebar ${openSidebar && "active"}`}>
       <div className="navigation">

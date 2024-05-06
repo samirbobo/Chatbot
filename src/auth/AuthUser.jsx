@@ -33,7 +33,6 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const { user } = await response.json();
-        console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         setLoginError(false);
@@ -65,7 +64,6 @@ const AuthProvider = ({ children }) => {
       );
       if (response.status === 200) {
         const { user } = await response.json();
-        console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         setLoginError(false);
@@ -179,7 +177,6 @@ const AuthProvider = ({ children }) => {
       // const response = await runChat(input.question);
       try {
         const response = await runChat(input.image);
-        // console.log(response);
         handleResponse(response, "one");
       } catch (err) {
         resetData();

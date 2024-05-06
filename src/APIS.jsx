@@ -9,7 +9,7 @@ export const getAllTasks = async (userID) => {
 };
 
 export const addTask = async (dataTask) => {
-  const response = await fetch(`${baseUrl}s/addTask`, {
+  const response = await fetch(`${baseUrl}/addTask`, {
     headers: {
       "Content-Type": "application/json",
     },

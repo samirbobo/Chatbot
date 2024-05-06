@@ -4,6 +4,8 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 
+import ErrorAlert from "../components/ErrorAlert";
+
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = "AIzaSyCuqQLcfipx9YLJAAoQDJy21k59LO5shGk";
 
@@ -52,9 +54,8 @@ async function runChat(prompt) {
     const result = await chat.sendMessage(prompt);
     return result.response.text();
   } catch (error) {
-    // console.error("Error running chat:", error);
-    // throw error; // Rethrow the error for handling by the caller
-    return "There is no exact answer to this question. Please ask a more clear question";
+    console.error("Error running chat:", error);
+    throw error; // Rethrow the error for handling by the caller
   }
 }
 

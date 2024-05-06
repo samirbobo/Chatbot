@@ -1,0 +1,218 @@
+.gpa-calculator .adding {
+  transition: var(--trans-03);
+  margin-top: 0.5rem;
+}
+
+.gpa-calculator .add-task {
+  transition: var(--trans-03);
+  justify-content: space-between;
+  align-items: end;
+  column-gap: 0.5rem;
+}
+.gpa-calculator .btn-add {
+  margin-left: 0px;
+}
+
+.add-task label {
+  flex: 1;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+  display: flex;
+  /* flex-direction: column; */
+  /* row-gap: 0.5rem; */
+  color: #32343d;
+  width: 232px;
+  transition: var(--trans-03);
+}
+.gpa-calculator .value-input {
+  padding: 15px 1rem;
+  appearance: none;
+  width: 100%;
+}
+.first-option {
+  color: #a3a7b5;
+  font-weight: 400;
+  line-height: 24px;
+  font-size: 1rem;
+  transition: 0.2s linear;
+}
+.custom-select {
+  position: relative;
+}
+.custom-select::after {
+  content: "";
+  --size: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid #6b7084;
+  top: 72%;
+  transform: translateY(-50%);
+}
+.custom-select::before {
+  content: "";
+  --size: 0.4rem;
+  position: absolute;
+  right: 19px;
+  pointer-events: none;
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid white;
+  top: 69%;
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: var(--trans-03);
+}
+
+.gpa-calculator .tasks {
+  margin-top: 1rem;
+  border-radius: 1rem;
+}
+.gpa-calculator .bar-tasks {
+  min-width: 100%;
+}
+.bar-tasks h2 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 41.6px;
+  color: #32343d;
+}
+.responsive-table {
+  overflow: auto;
+}
+
+.tbl-content {
+  overflow: auto;
+  max-height: calc(100vh - 4rem - 5rem - 140px - 140px);
+  width: 100%;
+  min-width: 900px;
+  border-radius: 1rem;
+}
+.gpa-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  transition: var(--trans-03);
+  min-width: 900px;
+}
+.tbl-content .gpa-table {
+  width: 100%;
+  min-width: 100%;
+}
+.gpa-table thead {
+  background: white;
+}
+.gpa-table thead tr {
+  border-bottom: 1px solid white;
+}
+.gpa-table tr .course-name,
+.gpa-table tbody .course-name {
+  padding: 12px 24px;
+  text-align: left;
+}
+.gpa-table tbody {
+}
+.gpa-table td,
+.gpa-table th {
+  padding: 12px 24px;
+  text-align: center;
+}
+
+.tr-item {
+  background: #ffffff;
+}
+.tr-item:nth-child(odd) {
+  background-color: #f9fafb;
+}
+
+.result {
+  padding: 2rem 0;
+  display: grid;
+  place-content: center;
+}
+.result .result-content {
+  width: 313px;
+  height: 115px;
+  padding: 16px 30px;
+  border-radius: 12px;
+  background: #036666;
+  color: white;
+  box-shadow: 0px 2px 4px -2px #1018280f, 0px 4px 8px -2px #1018281a;
+  transition: var(--trans-03);
+}
+.result h4 {
+  font-family: "Inter";
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: left;
+  padding-bottom: 1rem;
+  transition: var(--trans-03);
+}
+.result .result-value {
+  font-family: "Inter";
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 41.6px;
+  text-align: center;
+  display: block;
+  transition: var(--trans-03);
+}
+
+@media (min-width: 769px) and (max-width: 991px) {
+  .gpa-calculator .adding {
+    padding: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .gpa-calculator .adding {
+    padding: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .gpa-calculator .adding {
+    border: none;
+    padding: 1rem 0;
+  }
+  .gpa-calculator .add-task {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.5rem;
+  }
+  .add-task label {
+    width: 100%;
+  }
+  .gpa-calculator .add-task .btn-add {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .gpa-calculator .btn-add {
+    width: 75px;
+  }
+}
+@media (max-width: 480px) {
+  .custom-select::before {
+    top: 69%;
+  }
+  .result {
+    justify-content: normal;
+  }
+  .result .result-content {
+    width: 100%;
+    height: 85px;
+    padding: 8px 16px;
+  }
+  .result h4 {
+    padding-bottom: 0.5rem;
+  }
+  .result .result-value {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}

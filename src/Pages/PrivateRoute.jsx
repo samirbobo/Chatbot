@@ -12,17 +12,17 @@ export default function PrivateRoute() {
 
   if (!user) {
     return <Navigate to="/login" />;
-  } else {
-    return (
-      <>
-        <Sidebar
-          handleShowSidebar={handleShowSidebar}
-          openSidebar={openSidebar}
-        />
-        <main className={`main-section ${openSidebar && "active"}`}>
-          <Outlet />
-        </main>
-      </>
-    );
   }
+
+  return (
+    <>
+      <Sidebar
+        handleShowSidebar={handleShowSidebar}
+        openSidebar={openSidebar}
+      />
+      <main className={`main-section ${openSidebar && "active"}`}>
+        <Outlet />
+      </main>
+    </>
+  );
 }

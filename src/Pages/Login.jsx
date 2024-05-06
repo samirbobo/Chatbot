@@ -9,23 +9,23 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
-  const [loginError, setLoginError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { user, login } = UseGlobalUser();
+  const { user, login, loginError, setLoginError } = UseGlobalUser();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   useEffect(() => {
     // If user is already logged in, redirect to home page
+    setLoginError(false);
     if (user) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, navigate, setLoginError]);
 
   const vaildation = () => {
     const { email, password } = formData;
@@ -53,7 +53,6 @@ export default function Login() {
     try {
       await login(formData);
     } catch (err) {
-      setLoginError(true);
       console.log("login page ", err);
     } finally {
       setLoading(false);
@@ -104,7 +103,7 @@ export default function Login() {
             />
             {showPassword ? (
               <HideEyeIcon onClick={handleClickShowPassword} />
-              ) : (
+            ) : (
               <EyeIcon onClick={handleClickShowPassword} />
             )}
           </label>
@@ -114,7 +113,7 @@ export default function Login() {
           <p className="text-account">
             {"Don't"} have an account? <Link to="/register">Sign up</Link>
           </p>
-          <button type="submit" className="submit">
+          <button type="submit" className="submit" disabled={loading}>
             {loading ? <div className="spinner"></div> : "Log in"}
           </button>
         </form>

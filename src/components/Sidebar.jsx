@@ -4,12 +4,11 @@ import GpaCalculator from "../Icons/GpaCalculator";
 import ToDoListIcon from "../Icons/ToDoListIcon";
 import SettingIcon from "../Icons/SettingIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
-import avater from "../images/avater.png";
 import SidebarIcon from "../Icons/SidebarIcon";
 import LeftIcon from "../Icons/LeftIcon";
 import RightIcon from "../Icons/RightIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
-import PersonIcon from "../Icons/PersonIcon";
+import avater from "../images/avater.png";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
   const { logout, user } = UseGlobalUser();
@@ -24,7 +23,7 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
             <i>
               <ChatbotIcon />
             </i>
-            <p className="text">Chatbot</p>
+            <p className="text">EduGuide</p>
           </NavLink>
           <NavLink to="/gpa-calculator" className="link">
             <i>
@@ -53,12 +52,18 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
         </nav>
       </div>
       <div className="sidebar-footer">
-        <i>
-          <PersonIcon />
-        </i>
+        <img
+          src={
+            user?.image_path
+              ? `https://to-do-list.sintac.site/${user.image_path}`
+              : avater
+          }
+          alt="Avater"
+          className="person"
+        />
         <article className="footer-info text">
-          <h4>{user.user.name}</h4>
-          <p>{user.user.email}</p>
+          <h4>{user?.name}</h4>
+          <p>{user?.email}</p>
         </article>
       </div>
       <button className="arow-sidebar" onClick={handleShowSidebar}>

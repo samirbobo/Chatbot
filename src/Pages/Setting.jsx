@@ -73,8 +73,7 @@ export default function Setting() {
     if (
       formData?.name.trim().length <= 1 ||
       formData?.email.trim().length <= 1 ||
-      (user?.user?.name === formData?.name &&
-        user?.user?.email === formData?.email)
+      (user?.name === formData?.name && user?.email === formData?.email)
     ) {
       setNoDrop(true);
     } else {
@@ -188,7 +187,7 @@ export default function Setting() {
               type="submit"
               className={`btn-edit settin-btn ${noDrop ? "no-drop" : ""}`}
               onMouseOver={handleDropMouse}
-              disabled={loading}
+              // disabled={loading}
             >
               Edit
             </button>

@@ -1,0 +1,252 @@
+.div-tittle{
+    width: 153px;
+    height: 86px;
+    Top: 108px;
+    left: 360px;
+    padding: 8px,0,8px,0;
+    gap: 8px;
+}
+
+.min-tittle{
+    color:  #626C83;
+    width: 153px;
+    height: 27px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: left;
+}
+
+.tittle{
+    width: 153px;
+    height: 35px;
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 41.6px;
+    text-align: left;
+    color: #32343D;
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+.adding{
+    border: 1px solid #E2E6EE ;
+    border-radius: 18px;
+    padding: 32px;
+    width: 1150px;
+}
+
+.add-tittle{
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #32343D;
+    padding: 5px;
+}
+
+
+.value-input{
+    border: 1px solid #E2E6EE ;
+    border-radius: 12px;
+    padding: 10px;
+    width: 790px;
+    height: 48px;
+}
+
+.btn-add{
+width: 108px;
+height:40px;
+padding: 8px 14px 8px 14px;
+border: 1px solid #E2E6EE ;
+border-radius: 12px;
+margin-left: 180px;
+background-color:#036666;
+color: aliceblue;
+cursor: pointer;
+}
+
+.btn-add:hover{
+    opacity: 0.8;
+}
+
+.tasks{
+    border: 1px solid #E2E6EE ;
+    border-radius: 12px;
+    width: 1100px;
+    margin-top: 30px;
+
+}
+
+.bar-tasks{
+    height: 69px;
+    padding: 16px;
+}
+
+.true-btn{
+    background-color: #E6F0F0;
+    color: #036666;
+}
+
+#a{
+    background-color: #32343D;
+}
+
+.item{
+    display: flex;
+    height: 50px;
+    width: 100%;
+    justify-content: space-between;
+}
+.item:nth-child(odd){
+    background-color: #f2f2f2;
+}
+
+.first-item{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+.sec-item{
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.check-item{
+    width: 24px;
+    height: 24px;
+    padding: 3px 0px 0px 0px;
+    margin: 15px;
+    gap: 0px;
+    border: 1px solid #E2E6EE ;
+    border-radius: 4px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    accent-color: #036666;
+    cursor: pointer;
+}
+
+.task{
+    /* width: 200px; */
+    overflow-wrap: break-word;
+    list-style-type:none;
+    margin: 15px;
+}
+
+.edit{
+    margin: 15px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+.edit:hover{
+    opacity: 0.5;
+}
+.trash{
+    margin: 15px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+.trash:hover{
+    color: red;
+}
+/* ------------------------------------------------------------- */
+.back{
+    position: fixed;
+    background-color: #0E0E0E47;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  .allert{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #FFFFFF;
+    padding: 32px;
+    border-radius: 20px;
+    width: 412px;
+    height: 272px;
+    gap: 16px;
+  }
+
+  .top-allert{
+    width: 332px;
+    height: 188px;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .end-trash{
+    width: 33.33px;
+    height: 33.33px;
+    display: block;
+    margin: auto;
+    gap: 0px;
+    border: 1.5px 0px 0px 0px;
+    color: #EF233C;
+  }
+
+  .msg-sure{
+    width: 300px;
+    height: 68px;
+    margin-top: 25px;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 33.6px;
+    text-align: center;
+  }
+
+  .bottom-allert{
+    width: 348px;
+    height: 44px;
+    gap: 12px;
+    opacity: 0px;
+
+  }
+
+  .btn-sure{
+    font-family: Inter;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.40799999237060547px;
+    text-align: center;
+    width: 168px;
+    height: 44px;
+    padding: 11px 16px 11px 16px;
+    gap: 10px;
+    border: 0.5px 0px 0px 0px;
+    opacity: 0px;
+    border: 0.5px solid #3C3C435C;
+    background: #FFFFFF;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+
+  .btn-sure:hover{
+    color: #036666;
+  }
+
+
+
+
+
+
+
+
+
+
+

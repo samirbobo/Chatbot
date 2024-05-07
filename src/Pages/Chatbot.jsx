@@ -144,10 +144,12 @@ export default function Chatbot() {
                     ></div>
                   )}
                 </div>
-                <i>
-                  <CopyIcon onClick={handleCopyText} />
-                  <p className="show-copy">Copy</p>
-                </i>
+                {!loading && (
+                  <i>
+                    <CopyIcon onClick={handleCopyText} />
+                    <p className="show-copy">Copy</p>
+                  </i>
+                )}
               </article>
               <div ref={scrollRef}></div>
             </Fragment>

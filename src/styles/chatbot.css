@@ -365,7 +365,8 @@ input[type="file"]::-webkit-file-upload-button {
 .chatbot .chatbot-box .answer > i .show-copy::before {
   content: "";
   position: absolute;
-  bottom: 34px;
+  /* bottom: 34px; */
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid;

@@ -239,3 +239,27 @@ export default AuthProvider;
 export const UseGlobalUser = () => {
   return useContext(AuthUser);
 };
+
+/* 
+check language:
+
+const langdetect = require('langdetect');
+async function checkLanguage(input) {
+    // Detect the language of the input question
+    const language = langdetect.detect(input);
+
+    // Check if the detected language is Arabic
+    const isArabic = language === 'ar';
+
+    // Log the result
+    console.log(isArabic);
+}
+
+// Assuming input.question contains the text of the question
+const input = {
+    question: "Your question here"
+};
+
+checkLanguage(input.question);
+
+*/

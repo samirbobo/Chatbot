@@ -27,9 +27,13 @@ export default function Chatbot() {
   }, [scrollQuestion]);
 
   const handleCopyText = (e) => {
-    const answerContent = e.target
+    const answerContentElement = e.target
       .closest(".answer")
-      .querySelector(".answer-content").textContent;
+      .querySelector(".answer-content");
+    const answerContent = answerContentElement.textContent.replace(
+      /If the answer is wrong, rephrase the question more accurately or make sure the question is written correctly/gi,
+      ""
+    );
     let showCopy = e.target.closest(".answer").querySelector(".show-copy");
     showCopy.innerHTML = "Copied";
     setTimeout(() => {
@@ -144,7 +148,7 @@ export default function Chatbot() {
                     ></div>
                   )}
                 </div>
-                {!loading && (
+                {result.copyLoading && (
                   <i>
                     <CopyIcon onClick={handleCopyText} />
                     <p className="show-copy">Copy</p>

@@ -90,9 +90,12 @@ const AuthProvider = ({ children }) => {
   };
 
   async function handleResponse(response, number) {
+    /* ===================== Chatbot Gemini ===================== */
     if (number === "one") {
-      response = response.replace(/(Gemini|Gemine)/gi, "EduGuide");
-      response = response.replace(/Google/gi, "<b>Ahmed and Eslam</b>");
+      response +=
+        "If the answer is wrong, rephrase the question more accurately or make sure the question is written correctly";
+      // response = response.replace(/(Gemini|Gemine)/gi, "EduGuide");
+      // response = response.replace(/Google/gi, "<b>Ahmed and Eslam</b>");
       response = response.replace(
         /\n\n\* \*\*(.*?)\*\*/g,
         "<br/><br />- <b>$1</b>"
@@ -112,6 +115,7 @@ const AuthProvider = ({ children }) => {
         `<article class="code-body"><code class="code"><pre class="pre-code">$2</pre></code></article>`
       );
     } else {
+      /* ===================== Chatbot EduGuide ===================== */
       response = response.replace(
         /(https?:\/\/[^\s]+)/g,
         '<a href="$1" style="text-decoration: underline" target="_blank">$1</a>'
@@ -119,6 +123,18 @@ const AuthProvider = ({ children }) => {
       response = response.replace(/\n\n/g, "<br/><br />- ");
       response = response.replace(/\n/g, "<br/><br />- ");
     }
+
+    const errorMessage =
+      "If the answer is wrong, rephrase the question more accurately or make sure the question is written correctly";
+    const replacementHTML = `<p style="font-size: 14px;
+    color: #ffa800;
+    margin-top: 25px;
+    display: block;">${errorMessage}</p>`;
+
+    response = response.replace(
+      new RegExp(errorMessage, "gi"),
+      replacementHTML
+    );
 
     let newResponseArray = response.split(" ");
 
@@ -131,6 +147,14 @@ const AuthProvider = ({ children }) => {
           // Call setLoading(false) when all responses have been processed
           setLoading(false);
           setInput({ question: "", image: null });
+          console.log(reseltData);
+          setReseltData((prev) => [
+            ...prev.slice(0, -1),
+            {
+              ...prev[prev.length - 1],
+              copyLoading: true,
+            },
+          ]);
         }
       });
     });
@@ -142,6 +166,7 @@ const AuthProvider = ({ children }) => {
         ...prev.slice(0, -1),
         {
           ...prev[prev.length - 1],
+          copyLoading: false,
           loading: false,
           answer: prev[prev.length - 1].answer + nextWord,
         },
@@ -169,7 +194,12 @@ const AuthProvider = ({ children }) => {
     setShowResult(true);
     setReseltData((prev) => [
       ...prev,
-      { question: input.question, loading: true, answer: "" },
+      {
+        question: input.question,
+        copyLoading: false,
+        loading: true,
+        answer: "",
+      },
     ]);
     setScrollQuestion((prev) => !prev);
     /* ===================== Chatbot Gemini ===================== */
@@ -186,7 +216,7 @@ const AuthProvider = ({ children }) => {
       try {
         const response = await chatbot({ msg: input.question });
         const data = await response.json();
-        console.log(data.response);
+        console.log("EduGuide:", data.response);
         try {
           if (data.response === "Sorry, I didn't understand that.") {
             const response = await runChat(input.question);

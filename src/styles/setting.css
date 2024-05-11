@@ -30,6 +30,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  object-fit: cover;
   transition: var(--trans-03);
 }
 .bottom-icon {

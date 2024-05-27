@@ -1,5 +1,5 @@
 import SearchIcon from "../Icons/SearchIcon";
-import UploadImgIcon from "../Icons/UploadImgIcon";
+// import UploadImgIcon from "../Icons/UploadImgIcon";
 import CopyIcon from "../Icons/CopyIcon";
 import ChatbotIcon from "../Icons/ChatbotIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
@@ -64,10 +64,10 @@ export default function Chatbot() {
     }
   };
 
-  const handleImageChange = (e) => {
-    const img = URL.createObjectURL(e.target.files[0]);
-    if (img) setInput({ ...input, image: img });
-  };
+  // const handleImageChange = (e) => {
+  //   const img = URL.createObjectURL(e.target.files[0]);
+  //   if (img) setInput({ ...input, image: img });
+  // };
 
   return (
     <section className="chatbot">
@@ -96,15 +96,15 @@ export default function Chatbot() {
         ) : (
           <SearchIcon />
         )}
-        <div className="container-upload-icon">
-          {/* <input
+        {/* <div className="container-upload-icon">
+          <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
             id="upload-input"
-          /> */}
+          />
           <UploadImgIcon className="edit bottom-icon" />
-        </div>
+        </div> */}
         <div className="warning">
           <i>
             <WariningIcon />

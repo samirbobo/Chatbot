@@ -267,7 +267,7 @@ export default function ToDoList() {
           </button>
         </form>
         {errorInput && (
-          <p className="mes-error" style={{ position: "absolute" }}>
+          <p className="mes-error todo-error">
             A task cannot contain symbols or begin with numbers
           </p>
         )}

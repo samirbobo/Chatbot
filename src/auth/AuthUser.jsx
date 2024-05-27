@@ -43,7 +43,10 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (err) {
-      console.log("Error in login api", err);
+      console.log("Error in login api", {
+        message: "الحساب غير موجود",
+        status: false,
+      });
       setLoginError(true);
       setUser(null);
       return err;
@@ -74,7 +77,10 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (err) {
-      console.log("Error in login api", err);
+      console.log("Error in login api", {
+        message: "الحساب موجود بالفعل",
+        status: false,
+      });
       setRegisterError(true);
       setUser(null);
       return err;
@@ -100,7 +106,7 @@ const AuthProvider = ({ children }) => {
         /\n\n\* \*\*(.*?)\*\*/g,
         "<br/><br />- <b>$1</b>"
       );
-      response = response.replace(/\* \*\*(.*?)\*\*/g, "<br/>- <b>$1</b>");
+      response = response.replace(/\* \*\*(.*?)\*\*/g, "<br/><br/>- <b>$1</b>");
 
       response = response.replace(/\*\*(.*?)\*\*\n\n/g, "<b>$1</b><br/><br/>");
 
@@ -120,6 +126,10 @@ const AuthProvider = ({ children }) => {
         /(https?:\/\/[^\s]+)/g,
         '<a href="$1" style="text-decoration: underline" target="_blank">$1</a>'
       );
+      response = response.replace(/-\s/g, "");
+      response = response.replace(/\n\n(\d+)\./g, "<br/><br />$1- ");
+      response = response.replace(/\n(\d+)\./g, "<br/><br />$1- ");
+      response = response.replace(/(\d+)\./g, "$1-");
       response = response.replace(/\n\n/g, "<br/><br />- ");
       response = response.replace(/\n/g, "<br/><br />- ");
     }
@@ -147,7 +157,6 @@ const AuthProvider = ({ children }) => {
           // Call setLoading(false) when all responses have been processed
           setLoading(false);
           setInput({ question: "", image: null });
-          console.log(reseltData);
           setReseltData((prev) => [
             ...prev.slice(0, -1),
             {
@@ -269,27 +278,3 @@ export default AuthProvider;
 export const UseGlobalUser = () => {
   return useContext(AuthUser);
 };
-
-/* 
-check language:
-
-const langdetect = require('langdetect');
-async function checkLanguage(input) {
-    // Detect the language of the input question
-    const language = langdetect.detect(input);
-
-    // Check if the detected language is Arabic
-    const isArabic = language === 'ar';
-
-    // Log the result
-    console.log(isArabic);
-}
-
-// Assuming input.question contains the text of the question
-const input = {
-    question: "Your question here"
-};
-
-checkLanguage(input.question);
-
-*/

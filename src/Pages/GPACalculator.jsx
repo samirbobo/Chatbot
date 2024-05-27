@@ -68,6 +68,11 @@ export default function GPACalculator() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputHours.current.classList.contains("open"))
+      inputHours.current.click();
+    if (inputGrade.current.classList.contains("open"))
+      inputGrade.current.click();
+
     if (!vildation()) return;
 
     const addCourse = [
@@ -84,7 +89,7 @@ export default function GPACalculator() {
     setCourses(addCourse);
     setShowCourses(true);
     setCourseName("");
-    setCreditsHours("");
+    setCreditsHours(null);
     setGrade("");
   };
 
@@ -208,6 +213,7 @@ export default function GPACalculator() {
                     id={`id${item}`}
                     className="radio"
                     onChange={handleHourChange}
+                    checked={creditsHours == item ? true : false}
                   />
                   <label htmlFor={`id${item}`}>{item}</label>
                 </Fragment>
@@ -257,6 +263,7 @@ export default function GPACalculator() {
                     id={`id${name}`}
                     className="radio"
                     onChange={handleGradeChange}
+                    checked={grade == name ? true : false}
                   />
                   <label htmlFor={`id${name}`}>{name}</label>
                 </Fragment>
@@ -302,6 +309,10 @@ export default function GPACalculator() {
                             onClick={() => {
                               setModalOpen(true);
                               setCourseId(course.id);
+                              if (inputHours.current.classList.contains("open"))
+                                inputHours.current.click();
+                              if (inputGrade.current.classList.contains("open"))
+                                inputGrade.current.click();
                             }}
                           />
                         </td>

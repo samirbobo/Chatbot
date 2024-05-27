@@ -109,6 +109,10 @@ ul {
 .btn-add:hover {
   opacity: 0.8;
 }
+.todo-error {
+  position: absolute;
+  transition: 0.3s linear;
+}
 
 .tasks {
   position: relative;
@@ -290,6 +294,9 @@ ul {
   }
   .value-input {
     width: 100%;
+  }
+  .todo-error {
+    position: relative;
   }
   .to-do-list .add-task {
     flex-direction: column;

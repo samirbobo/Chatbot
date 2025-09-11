@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
 import ChatbotIcon from "../Icons/ChatbotIcon";
 import GpaCalculator from "../Icons/GpaCalculator";
@@ -11,7 +12,12 @@ import { UseGlobalUser } from "../auth/AuthUser";
 import avater from "../images/avater.png";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
-  const { logout, user } = UseGlobalUser();
+  const { logout, user, getFileViewURL } = UseGlobalUser();
+  let userImage;
+  if (user?.prefs?.profileImage) {
+    userImage = getFileViewURL(user?.prefs?.profileImage);
+  }
+
   return (
     <aside className={`sidebar ${openSidebar && "active"}`}>
       <div className="navigation">
@@ -54,9 +60,7 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
       <div className="sidebar-footer">
         <img
           src={
-            user?.image_path
-              ? `https://to-do-list.sintac.site/${user.image_path}`
-              : avater
+            userImage ? userImage : user?.image_path ? user.image_path : avater
           }
           alt="Avater"
           className="person"

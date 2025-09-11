@@ -4,10 +4,8 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 
-import ErrorAlert from "../components/ErrorAlert";
-
-const MODEL_NAME = "gemini-1.0-pro";
-const API_KEY = "AIzaSyCuqQLcfipx9YLJAAoQDJy21k59LO5shGk";
+const MODEL_NAME = "gemini-1.5-flash";
+const API_KEY = "AIzaSyD4G8M6nSRNFwvx0UBuTDEonVbqT_9QeD0";
 
 async function runChat(prompt) {
   try {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import DeleteIcon from "../Icons/DeleteIcon";
 
 export default function AlertModel({

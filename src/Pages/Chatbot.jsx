@@ -4,7 +4,7 @@ import CopyIcon from "../Icons/CopyIcon";
 import ChatbotIcon from "../Icons/ChatbotIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
 import WariningIcon from "../Icons/WariningIcon";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment } from "react";
 import avater from "../images/avater.png";
 
 export default function Chatbot() {
@@ -15,16 +15,16 @@ export default function Chatbot() {
     reseltData,
     onSent,
     scrollRef,
-    scrollQuestion,
     loading,
     user,
+    getFileViewURL,
+    chatContainerRef,
   } = UseGlobalUser();
-  const mesEnd = useRef(null);
 
-  useEffect(() => {
-    if (reseltData.length > 1)
-      mesEnd.current.scrollIntoView({ behavior: "smooth" });
-  }, [scrollQuestion]);
+  let userImage;
+  if (user?.prefs?.profileImage) {
+    userImage = getFileViewURL(user?.prefs?.profileImage);
+  }
 
   const handleCopyText = (e) => {
     const answerContentElement = e.target
@@ -116,17 +116,16 @@ export default function Chatbot() {
         </div>
       </div>
       {showResult && (
-        <section className="chatbot-box">
+        <section className="chatbot-box" ref={chatContainerRef}>
           {reseltData.map((result, index) => (
             <Fragment key={index}>
-              <article
-                className="question"
-                ref={reseltData.length > 1 ? mesEnd : null}
-              >
+              <article className="question">
                 <img
                   src={
-                    user?.image_path
-                      ? `https://to-do-list.sintac.site/${user.image_path}`
+                    userImage
+                      ? userImage
+                      : user?.image_path
+                      ? user.image_path
                       : avater
                   }
                   alt="Avater"

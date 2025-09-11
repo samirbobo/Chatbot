@@ -1,8 +1,17 @@
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import runChat from "../config/gemini";
 import { chatbot } from "../APIS";
 import ErrorAlert from "../components/ErrorAlert";
+import {
+  account,
+  APPWRITE_BUCKET_ID,
+  APPWRITE_ENDPOINT,
+  APPWRITE_PROJECT_ID,
+  avatars,
+} from "../lib/appwrite";
+import { ID } from "appwrite";
 
 const AuthUser = createContext(null);
 
@@ -21,27 +30,18 @@ const AuthProvider = ({ children }) => {
   );
   const navigate = useNavigate();
   const scrollRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
   const login = async (userData) => {
     try {
-      const response = await fetch("https://to-do-list.sintac.site/api/logIn", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "post",
-        body: JSON.stringify(userData),
+      await account.createEmailPasswordSession({
+        email: userData.email,
+        password: userData.password,
       });
-      if (response.status === 200) {
-        const { user } = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        setLoginError(false);
-        navigate("/");
-      } else {
-        throw {
-          status: response.status,
-        };
-      }
+
+      getInitialUserValue();
+      setRegisterError(false);
+      navigate("/");
     } catch (err) {
       console.log("Error in login api", {
         message: "الحساب غير موجود",
@@ -54,28 +54,17 @@ const AuthProvider = ({ children }) => {
   };
 
   const Register = async (userData) => {
+    const { name, email, password } = userData;
     try {
-      const response = await fetch(
-        "https://to-do-list.sintac.site/api/signUp",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "post",
-          body: JSON.stringify(userData),
-        }
-      );
-      if (response.status === 200) {
-        const { user } = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        setLoginError(false);
-        navigate("/");
-      } else {
-        throw {
-          status: response.status,
-        };
-      }
+      const response = await account.create({
+        userId: ID.unique(),
+        email,
+        password,
+        name,
+      });
+
+      console.log("User Registered:", response);
+      await login(userData);
     } catch (err) {
       console.log("Error in login api", {
         message: "الحساب موجود بالفعل",
@@ -87,13 +76,38 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const getInitialUserValue = async () => {
+    try {
+      const response = await account.get();
+
+      const newResponse = {
+        ...response,
+        image_path: avatars.getInitials({ name: response.name }).toString(),
+      };
+
+      localStorage.setItem("user", JSON.stringify(newResponse));
+      setUser(newResponse);
+    } catch (err) {
+      console.log("Error in get Initial User", {
+        message: "الحساب يحتوي علي مشكله",
+        status: false,
+      });
+      setUser(null);
+      return err;
+    }
+  };
+
+  const logout = async () => {
     localStorage.removeItem("user");
+    await account.deleteSession({ sessionId: "current" });
     setUser(null);
     navigate("/login");
     setReseltData([]);
     setShowResult(false);
   };
+
+  const getFileViewURL = (fileId) =>
+    `${APPWRITE_ENDPOINT}/storage/buckets/${APPWRITE_BUCKET_ID}/files/${fileId}/view?project=${APPWRITE_PROJECT_ID}`;
 
   async function handleResponse(response, number) {
     /* ===================== Chatbot Gemini ===================== */
@@ -180,9 +194,15 @@ const AuthProvider = ({ children }) => {
           answer: prev[prev.length - 1].answer + nextWord,
         },
       ]);
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+
       if (callback) {
         callback(); // Execute the callback function
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTo({
+            top: chatContainerRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
       }
     }, 75 * index);
   };
@@ -258,6 +278,7 @@ const AuthProvider = ({ children }) => {
     logout,
     Register,
     setRegisterError,
+    getInitialUserValue,
     registerError,
     input,
     setInput,
@@ -270,6 +291,8 @@ const AuthProvider = ({ children }) => {
     onSent,
     scrollRef,
     scrollQuestion,
+    getFileViewURL,
+    chatContainerRef,
   };
   return <AuthUser.Provider value={values}>{children}</AuthUser.Provider>;
 };

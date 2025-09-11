@@ -32,14 +32,14 @@ export default function Login() {
     const vaildEmail = /^[a-zA-Z][a-zA-Z0-9]*@gmail.com$/;
     let isValid = true;
     if (
-      email.split("@")[0].length < 4 || // The number of letters in the name must be at least 5
+      email.split("@")[0].length < 3 || // The number of letters in the name must be at least 5
       [...new Set(email.split("@")[0])].length <= 1 || //Test whether this name is a duplicate or a real name
       !vaildEmail.test(email) // I test whether the entire email contains the correct general form or not
     ) {
       setEmailError(true);
       isValid = false;
     }
-    if (password.length < 6) {
+    if (password.trim().length < 8) {
       setPasswordError(true);
       isValid = false;
     }
@@ -108,7 +108,7 @@ export default function Login() {
             )}
           </label>
           {passwordError && (
-            <p className="mes-error pass">Minimum 6 characters are required</p>
+            <p className="mes-error pass">Minimum 8 characters are required</p>
           )}
           <p className="text-account">
             {"Don't"} have an account? <Link to="/register">Sign up</Link>

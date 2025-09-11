@@ -42,14 +42,14 @@ export default function Register() {
       isValid = false;
     }
     if (
-      email.split("@")[0].length < 4 || // The number of letters in the name must be at least 5
+      email.split("@")[0].length < 3 || // The number of letters in the name must be at least 3 (Like: Mai)
       [...new Set(email.split("@")[0])].length <= 1 || //Test whether this name is a duplicate or a real name
       !vaildEmail.test(email) // I test whether the entire email contains the correct general form or not
     ) {
       setEmailError(true);
       isValid = false;
     }
-    if (password.length < 6) {
+    if (password.trim().length < 8) {
       setPasswordError(true);
       isValid = false;
     }
@@ -140,7 +140,7 @@ export default function Register() {
             )}
           </label>
           {passwordError && (
-            <p className="mes-error pass">Minimum 6 characters are required</p>
+            <p className="mes-error pass">Minimum 8 characters are required</p>
           )}
           <label>
             Confirm Password

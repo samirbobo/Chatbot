@@ -4,8 +4,8 @@ import EditIcon from "../Icons/EditIcon";
 import DeleteIcon from "../Icons/DeleteIcon";
 import AlertModel from "../components/AlertModel";
 import {
-  EditDescriptionTask,
-  EditTask,
+  editDescriptionTask,
+  editTask,
   addTask,
   deleteTask,
   getAllTasks,
@@ -20,7 +20,7 @@ export default function ToDoList() {
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [showTasks, setShowTasks] = useState(false);
   const [errorInput, setErrorInput] = useState(false);
-  const [todo, setTodo] = useState("");
+  const [todoDesc, setTodoDesc] = useState("");
   const [originalTodos, setOriginalTodos] = useState([]);
   const [todos, setTodos] = useState([]);
   const [todoToShow, setTodoToShow] = useState("All");
@@ -30,38 +30,37 @@ export default function ToDoList() {
   const [todoId, setTodoId] = useState(null);
   const inputRef = useRef();
 
-  const getTasks = async () => {
-    setLoadingAllData(true);
-    try {
-      const response = await getAllTasks(user.id);
-      const data = await response.json();
-      const tasks = data.tasks.map((task) => {
-        return {
-          id: task.id,
-          todo: task.desc,
-          complete: task.is_completed === 1 ? true : false,
-        };
-      });
-      setOriginalTodos(tasks.slice().reverse());
-      setTodos(tasks.slice().reverse());
-      if (tasks.length > 0) setShowTasks(true);
-    } catch (error) {
-      ErrorAlert("There is a problem with the server, please try again later");
-    } finally {
-      setLoadingAllData(false);
-    }
-  };
-
   useEffect(() => {
+    const getTasks = async () => {
+      setLoadingAllData(true);
+      try {
+        const data = await getAllTasks(user.$id);
+        const tasks = data.map((task) => ({
+          $id: task.$id,
+          description: task.description,
+          completed: task.completed,
+        }));
+        setOriginalTodos(tasks.slice().reverse());
+        setTodos(tasks.slice().reverse());
+        if (tasks.length > 0) setShowTasks(true);
+      } catch (error) {
+        ErrorAlert(
+          "There is a problem with the server, please try again later"
+        );
+      } finally {
+        setLoadingAllData(false);
+      }
+    };
+
     getTasks();
-  }, []);
+  }, [user.$id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validName =
       /^(?:[1-9]-[a-zA-Z][a-zA-Z0-9]*|[a-zA-Z][a-zA-Z0-9]*)(?!.*[-$#!@%^&*{}[()\]></?"_+=.~-])/;
 
-    if (!validName.test(todo)) {
+    if (!validName.test(todoDesc)) {
       setErrorInput(true);
       return;
     }
@@ -69,32 +68,30 @@ export default function ToDoList() {
     if (editId) {
       setLoading(true);
       try {
-        await EditDescriptionTask({
+        await editDescriptionTask({
           id: editId,
-          desc: {
-            desc: todo,
-          },
+          description: todoDesc,
         });
         const updatedTodos = todos.map((task) =>
-          task.id === editId
-            ? { id: editId, todo, complete: task.complete }
+          task.$id === editId
+            ? { $id: editId, description: todoDesc, completed: task.completed }
             : task
         );
 
         const updatedOriginalTodos = originalTodos.map((task) =>
-          task.id === editId
-            ? { id: editId, todo, complete: task.complete }
+          task.$id === editId
+            ? { $id: editId, description: todoDesc, completed: task.completed }
             : task
         );
 
         setTodos(updatedTodos);
         setOriginalTodos(updatedOriginalTodos);
         setEditId(null);
-        setTodo("");
+        setTodoDesc("");
         return;
       } catch (error) {
         ErrorAlert("This task could not be Edit Description, please try again");
-        setTodo("");
+        setTodoDesc("");
       } finally {
         setLoading(false);
       }
@@ -106,29 +103,37 @@ export default function ToDoList() {
 
     todos.length < 1 ? setLoadingAllData(true) : setLoading(true);
     try {
-      const response = await addTask({
-        name: todo,
-        desc: todo,
-        timeing: Date.now(),
-        user_id: user.id,
-        is_completed: "0",
+      const task = await addTask({
+        description: todoDesc,
+        userId: user.$id,
+        completed: false,
       });
-      const { task } = await response.json();
       newTodosOriginal = [
-        { id: task.id, todo: task.desc, complete: false },
+        {
+          $id: task.$id,
+          description: task.description,
+          completed: task.completed,
+        },
         ...originalTodos,
       ];
-      newTodos = [{ id: task.id, todo: task.desc, complete: false }, ...todos];
+      newTodos = [
+        {
+          $id: task.$id,
+          description: task.description,
+          completed: task.completed,
+        },
+        ...todos,
+      ];
 
-      if (todo !== "" && todoToShow !== "Completed") {
+      if (todoDesc !== "" && todoToShow !== "Completed") {
         setTodos(newTodos);
       }
       setOriginalTodos(newTodosOriginal);
       setShowTasks(true);
-      setTodo("");
+      setTodoDesc("");
     } catch (error) {
       ErrorAlert("This task could not be added, please try again");
-      setTodo("");
+      setTodoDesc("");
     } finally {
       todos.length < 1 ? setLoadingAllData(false) : setLoading(false);
     }
@@ -138,20 +143,20 @@ export default function ToDoList() {
     setLoadingAlert(true);
     try {
       await deleteTask(id);
-      const deleteTodo = todos.filter((to) => to.id !== id);
-      const deleteOriginalTodo = originalTodos.filter((to) => to.id !== id);
+      const deleteTodo = todos.filter((to) => to.$id !== id);
+      const deleteOriginalTodo = originalTodos.filter((to) => to.$id !== id);
       setTodos(deleteTodo);
       setOriginalTodos(deleteOriginalTodo);
       setTodoId(null);
       closeDialog();
-      setTodo("");
+      setTodoDesc("");
       setEditId(null);
       if (deleteOriginalTodo.length < 1) {
         setShowTasks(false);
       }
     } catch (error) {
       ErrorAlert("This task could not be deleted, please try again");
-      setTodo("");
+      setTodoDesc("");
     } finally {
       setLoadingAlert(false);
     }
@@ -164,21 +169,19 @@ export default function ToDoList() {
   const toggleComplete = async (id) => {
     let completeTask = [];
     let completeOriginalTask = [];
-    const task = originalTodos.find((ele) => ele.id === id);
+    const task = originalTodos.find((ele) => ele.$id === id);
 
     setLoading(true);
     try {
-      await EditTask({
+      await editTask({
         id: id,
-        completed: {
-          is_completed: task.complete === true ? "0" : "1",
-        },
+        completed: !task.completed,
       });
       completeTask = todos.map((task) => {
-        if (task.id === id) {
+        if (task.$id === id) {
           return {
             ...task,
-            complete: !task.complete,
+            completed: !task.completed,
           };
         } else {
           return task;
@@ -186,10 +189,10 @@ export default function ToDoList() {
       });
 
       completeOriginalTask = originalTodos.map((task) => {
-        if (task.id === id) {
+        if (task.$id === id) {
           return {
             ...task,
-            complete: !task.complete,
+            completed: !task.completed,
           };
         } else {
           return task;
@@ -198,10 +201,10 @@ export default function ToDoList() {
       if (todoToShow === "All") {
         setTodos(completeTask);
       } else if (todoToShow === "Active") {
-        const newTasks = completeTask.filter((todo) => !todo.complete);
+        const newTasks = completeTask.filter((todo) => !todo.completed);
         setTodos(newTasks);
       } else if (todoToShow === "Completed") {
-        const newTasks = completeTask.filter((todo) => todo.complete);
+        const newTasks = completeTask.filter((todo) => todo.completed);
         setTodos(newTasks);
       }
       setOriginalTodos(completeOriginalTask);
@@ -213,8 +216,8 @@ export default function ToDoList() {
   };
 
   const handleEdit = (id) => {
-    const editTodo = todos.find((i) => i.id === id);
-    setTodo(editTodo.todo);
+    const editTodo = todos.find((i) => i.$id === id);
+    setTodoDesc(editTodo.description);
     setEditId(id);
     inputRef.current.focus();
   };
@@ -226,10 +229,10 @@ export default function ToDoList() {
     if (activeBtnName === "All") {
       setTodos(originalTodos);
     } else if (activeBtnName === "Active") {
-      const newTasks = originalTodos.filter((todo) => !todo.complete);
+      const newTasks = originalTodos.filter((todo) => !todo.completed);
       setTodos(newTasks);
     } else if (activeBtnName === "Completed") {
-      const newTasks = originalTodos.filter((todo) => todo.complete);
+      const newTasks = originalTodos.filter((todo) => todo.completed);
       setTodos(newTasks);
     }
   };
@@ -254,9 +257,9 @@ export default function ToDoList() {
           <input
             className={`value-input ${errorInput && "error-input"}`}
             type="text"
-            value={todo}
+            value={todoDesc}
             onChange={(e) => {
-              setTodo(e.target.value);
+              setTodoDesc(e.target.value);
               setErrorInput(false);
             }}
             placeholder="add...."
@@ -293,13 +296,13 @@ export default function ToDoList() {
             )}
             {todos.map((task) => {
               return (
-                <li key={task.id} className="item">
+                <li key={task.$id} className="item">
                   <div className="first-item">
                     <input
                       className="check-item"
                       type="checkbox"
-                      onChange={() => toggleComplete(task.id)}
-                      checked={task.complete}
+                      onChange={() => toggleComplete(task.$id)}
+                      checked={task.completed}
                     />
                     <p
                       className="task"
@@ -307,20 +310,20 @@ export default function ToDoList() {
                         textDecoration: task.complete && "line-through",
                       }}
                     >
-                      {task.todo}
+                      {task.description}
                     </p>
                   </div>
 
                   <div className="sec-item">
                     <EditIcon
                       className="edit"
-                      onClick={() => handleEdit(task.id)}
+                      onClick={() => handleEdit(task.$id)}
                     />
                     <DeleteIcon
                       className="trash"
                       onClick={() => {
                         setModalOpen(true);
-                        setTodoId(task.id);
+                        setTodoId(task.$id);
                       }}
                     />
                   </div>

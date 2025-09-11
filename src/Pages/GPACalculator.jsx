@@ -150,7 +150,7 @@ export default function GPACalculator() {
     <section className="gpa-calculator">
       <article className="content-title">
         <h2>GPA Calculator</h2>
-        <p>You can view your account settings</p>
+        <p>A simple tool to help you calculate your GPA</p>
       </article>
 
       <div className="adding">

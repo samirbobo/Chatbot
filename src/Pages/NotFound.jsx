@@ -7,7 +7,9 @@ export default function NotFound() {
       <h2>Not Found Page</h2>
       <p>
         There is no page with this name! Return to the{" "}
-        <Link to="/">EduGuide Page</Link>
+        <Link to="/" style={{ color: "#036666", fontWeight: "bold" }}>
+          EduGuide Page
+        </Link>
       </p>
     </section>
   );

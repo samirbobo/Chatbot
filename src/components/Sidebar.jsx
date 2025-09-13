@@ -10,13 +10,22 @@ import LeftIcon from "../Icons/LeftIcon";
 import RightIcon from "../Icons/RightIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
 import avater from "../images/avater.png";
+import DarkIcon from "../Icons/DarkIcon";
+import LightIcon from "../Icons/LightIcon";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
   const { logout, user, getFileViewURL } = UseGlobalUser();
+  const { theme, setTheme } = useTheme();
+
   let userImage;
   if (user?.prefs?.profileImage) {
     userImage = getFileViewURL(user?.prefs?.profileImage);
   }
+
+  const handleStatusMode = (mode) => {
+    setTheme(mode);
+  };
 
   return (
     <aside className={`sidebar ${openSidebar && "active"}`}>
@@ -55,6 +64,28 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
             </i>
             <p className="text">Log out</p>
           </button>
+
+          <div className="container-mode">
+            <div
+              className={`mode ${theme === "light" && "active"}`}
+              onClick={() => handleStatusMode("light")}
+            >
+              <i>
+                <LightIcon />
+              </i>
+              <p>Light</p>
+            </div>
+
+            <div
+              className={`mode ${theme === "dark" && "active"}`}
+              onClick={() => handleStatusMode("dark")}
+            >
+              <i>
+                <DarkIcon />
+              </i>
+              <p>Dark</p>
+            </div>
+          </div>
         </nav>
       </div>
       <div className="sidebar-footer">

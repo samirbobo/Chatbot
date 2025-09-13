@@ -12,6 +12,7 @@ import {
   avatars,
 } from "../lib/appwrite";
 import { ID } from "appwrite";
+import { useTheme } from "../context/ThemeContext";
 
 const AuthUser = createContext(null);
 
@@ -31,6 +32,7 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const chatContainerRef = useRef(null);
+  const { setTheme } = useTheme();
 
   const login = async (userData) => {
     try {
@@ -104,6 +106,8 @@ const AuthProvider = ({ children }) => {
     navigate("/login");
     setReseltData([]);
     setShowResult(false);
+    setTheme("light");
+    localStorage.removeItem("theme");
   };
 
   const getFileViewURL = (fileId) =>
@@ -150,10 +154,7 @@ const AuthProvider = ({ children }) => {
 
     const errorMessage =
       "If the answer is wrong, rephrase the question more accurately or make sure the question is written correctly";
-    const replacementHTML = `<p style="font-size: 14px;
-    color: #ffa800;
-    margin-top: 25px;
-    display: block;">${errorMessage}</p>`;
+    const replacementHTML = `<p>${errorMessage}</p>`;
 
     response = response.replace(
       new RegExp(errorMessage, "gi"),

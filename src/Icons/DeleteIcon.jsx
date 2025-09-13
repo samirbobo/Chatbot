@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 export default function DeleteIcon({ className, onClick, size = 24 }) {
   return (
     <svg

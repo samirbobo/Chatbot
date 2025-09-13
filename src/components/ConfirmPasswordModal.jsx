@@ -48,19 +48,19 @@ export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
           )}
           <div className="bottom-allert">
             <button
+              className="btn-sure cancel"
+              type="submit"
+              disabled={loading}
+            >
+              Confirm
+            </button>
+            <button
               className="btn-sure delete"
               type="button"
               onClick={onClose}
               disabled={loading}
             >
               Cancel
-            </button>
-            <button
-              className="btn-sure cancel"
-              type="submit"
-              disabled={loading || !password}
-            >
-              Confirm
             </button>
           </div>
 

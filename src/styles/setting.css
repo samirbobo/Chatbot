@@ -33,6 +33,7 @@
   object-fit: cover;
   transition: var(--trans-03);
 }
+
 .bottom-icon {
   position: absolute;
   bottom: 3px;
@@ -42,6 +43,7 @@
   background: rgba(255, 255, 255, 0.3);
   transition: var(--trans-03);
 }
+
 .container-edit-icon {
   position: absolute;
   bottom: 0;
@@ -52,21 +54,26 @@
   overflow: hidden;
   text-align: center;
 }
+
 .container-edit-icon input[type="file"] {
   position: absolute;
   transform: scale(2);
   opacity: 0;
   z-index: 1;
 }
+
 input[type="file"]::-webkit-file-upload-button {
   cursor: pointer;
 }
+
 .container-edit-icon .bottom-icon path {
   stroke: #32343D;
 }
-.container-edit-icon input[type="file"]:hover ~ .bottom-icon path {
+
+.container-edit-icon input[type="file"]:hover~.bottom-icon path {
   stroke: #036666;
 }
+
 .settin-content {
   margin-top: 4rem;
   transition: var(--trans-03);
@@ -84,14 +91,17 @@ input[type="file"]::-webkit-file-upload-button {
   color: var(--chat-text);
   transition: var(--trans-03);
 }
+
 .setting-body hr {
   display: none;
   transition: var(--trans-03);
 }
+
 .setting-body form {
   padding: 10px 0px;
   transition: var(--trans-03);
 }
+
 .setting-body form label {
   display: block;
   font-weight: 500;
@@ -99,6 +109,7 @@ input[type="file"]::-webkit-file-upload-button {
   color: var(--subtitle-color);
   margin-bottom: 0.5rem;
 }
+
 .setting-body form input {
   width: 100%;
   padding: 12px 16px;
@@ -110,6 +121,7 @@ input[type="file"]::-webkit-file-upload-button {
   background-color: var(--sidebar-bg);
   color: var(--sidebar-text);
 }
+
 .setting-body form input::placeholder {
   color: #6b7084;
   font-weight: 500;
@@ -117,12 +129,15 @@ input[type="file"]::-webkit-file-upload-button {
   font-size: 1rem;
   transition: 0.2s linear;
 }
+
 .setting-body form input:focus::placeholder {
   opacity: 0;
 }
+
 .setting-body form .mes-error {
   margin-top: -1rem;
 }
+
 .settin-btn {
   border-radius: 12px;
   padding: 12px 14px;
@@ -135,23 +150,158 @@ input[type="file"]::-webkit-file-upload-button {
   line-height: 24px;
   transition: var(--trans-03);
 }
+
 .btn-edit {
   margin: 1rem 0;
   background: rgba(230, 240, 240, 1);
   color: rgba(3, 102, 102, 1);
 }
+
 .btn-delete {
   background: rgba(253, 233, 236, 1);
   color: rgba(239, 35, 60, 1);
 }
+
 .btn-edit:hover {
   background: rgb(177, 208, 208);
 }
+
 .btn-delete:hover {
   background: rgb(250, 187, 195);
 }
+
 .no-drop {
   cursor: no-drop;
+}
+
+.allert.setting {
+  max-width: 500px;
+}
+
+.header-model {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--mode-active-border);
+  padding-bottom: 12px;
+}
+
+.header-model h3 {
+  font-size: 18px;
+  color: var(--sidebar-text);
+  font-weight: normal;
+}
+
+.header-model i {
+  cursor: pointer;
+}
+
+.header-model .icon path {
+  fill: var(--icon-stroke)
+}
+
+.setting-body-model .body-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: .6rem;
+  border-bottom: 1px solid var(--sidebar-border);
+  min-height: 60px;
+}
+
+.setting-body-model .body-item:last-child {
+  border-bottom: transparent;
+}
+
+.setting-body-model .body-item p {
+  color: var(--sidebar-text);
+  font-size: 14px;
+}
+
+.setting-body-model .body-item button {
+  background: transparent;
+  border: transparent;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: var(--trans-03);
+}
+
+.setting-body-model .body-item button:hover {
+  background-color: var(--button-bg);
+  border-radius: .5rem;
+}
+
+.setting-body-model .body-item button span {
+  pointer-events: none;
+  color: var(--sidebar-text);
+  font-size: .875rem;
+}
+
+.setting-body-model .body-item button .icon path {
+  stroke: var(--sidebar-text);
+}
+
+.relative {
+  position: relative;
+}
+
+.setting-body-model .dropdown {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  background: var(--dropdown-model-bg);
+  border-radius: 1rem;
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  min-width: 220px;
+  z-index: 100;
+  pointer-events: auto;
+  box-shadow: var(--dropdown-shadow);
+  transition: var(--trans-03);
+}
+
+.setting-body-model .dropdown li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  margin-inline: 6px;
+  cursor: pointer;
+  color: var(--dropdown-li-text);
+  border-radius: .75rem;
+}
+
+.setting-body-model .dropdown li:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+.setting-body-model .dropdown li:hover,
+.setting-body-model .dropdown li.active {
+  background: var(--dropdown-li-bg);
+}
+
+.setting-body-model .dropdown li .theme-icon {
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+}
+
+.setting-body-model .dropdown li .theme-icon .icon path {
+  fill: var(--sidebar-text);
+}
+
+.setting-body-model .dropdown li span {
+  color: var(--sidebar-text);
+  font-size: 14px;
+}
+
+.setting-body-model .dropdown li i {
+  display: flex;
 }
 
 @media (min-width: 480px) {
@@ -159,10 +309,12 @@ input[type="file"]::-webkit-file-upload-button {
     width: 100px;
     height: 100px;
   }
+
   .bottom-icon {
     width: 32px;
     height: 32px;
   }
+
   .container-edit-icon {
     bottom: 10px;
     width: 32px;
@@ -188,40 +340,56 @@ input[type="file"]::-webkit-file-upload-button {
     border-radius: 18px;
     max-height: 495px;
   }
+
   .setting-body h3 {
     padding: 1rem 2rem;
   }
+
   .setting-body form {
     padding: 2rem 2.5rem;
   }
+
   .setting-body hr {
     display: block;
     border-color: rgba(226, 230, 238, 1);
   }
 }
+
 @media (max-width: 768px) {
   .setting-body {
     width: 70vw;
   }
+
   .setting-title {
     margin-top: 0;
   }
+
+  .setting-body-model .dropdown {
+    inset-inline-end: -25px;
+    inset-inline-start: auto;
+    min-width: 200px;
+  }
 }
+
 @media (max-width: 480px) {
   .setting-body {
     width: 100%;
   }
+
   .setting-title {
     align-items: start;
   }
+
   .content-title h2 {
     font-size: 1.5rem;
     line-height: normal;
   }
+
   .content-title p {
     font-size: 14px;
     line-height: normal;
   }
+
   .setting-body form .mes-error {
     font-size: 12px;
   }

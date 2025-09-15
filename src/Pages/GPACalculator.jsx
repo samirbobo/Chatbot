@@ -2,6 +2,7 @@ import { Fragment, useRef, useState } from "react";
 import "../styles/gpaCalculator.css";
 import DeleteIcon from "../Icons/DeleteIcon";
 import AlertModel from "../components/AlertModel";
+import { useTranslation } from "react-i18next";
 
 export default function GPACalculator() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function GPACalculator() {
   const [errorGrade, setErrorGrade] = useState(false);
   const [showCourses, setShowCourses] = useState(false);
   const [resultCalc, setResultCalc] = useState("");
+  const { t } = useTranslation();
 
   const grades = [
     { name: "A+", value: 4 },
@@ -35,7 +37,7 @@ export default function GPACalculator() {
 
   const vildation = () => {
     let valid = false;
-    const validName = /^[a-zA-Z][a-zA-Z0-9]/;
+    const validName = /^[\p{L}][\p{L}0-9\s]*$/u;
     if (!validName.test(courseName)) {
       setErrorCourseName(true);
     }
@@ -148,22 +150,22 @@ export default function GPACalculator() {
 
   return (
     <section className="gpa-calculator">
-      <article className="content-title">
-        <h2>GPA Calculator</h2>
-        <p>A simple tool to help you calculate your GPA</p>
+      <article className="content-title div-tittle">
+        <h2>{t("gpaCalculator")}</h2>
+        <p>{t("gpaToolDescription")}</p>
       </article>
 
       <div className="adding">
         <form onSubmit={handleSubmit} className="add-task">
           <label htmlFor="name" style={{ flexDirection: "column" }}>
-            Course name
+            {t("courseName")}
             <input
               style={{ marginTop: "0.5rem" }}
               className={`value-input ${errorCourseName && "error-input"}`}
               type="text"
               id="name"
               value={courseName}
-              placeholder="Distributed accounts"
+              placeholder={t("enterCourseName")}
               onChange={(e) => {
                 setCourseName(e.target.value);
                 setErrorCourseName(false);
@@ -172,7 +174,7 @@ export default function GPACalculator() {
           </label>
 
           <div className="dropdown">
-            <div className="title">Credits hours</div>
+            <div className="title">{t("creditHours")}</div>
             <div
               ref={inputHours}
               id="Hours"
@@ -181,7 +183,7 @@ export default function GPACalculator() {
               } ${!creditsHours ? "first-option" : ""}`}
               onClick={handleIputBox}
             >
-              {creditsHours ? creditsHours : "Select Hours"}
+              {creditsHours ? creditsHours : t("selectHours")}
             </div>
 
             <div className="list">
@@ -203,7 +205,7 @@ export default function GPACalculator() {
                   onChange={handleHourChange}
                 />
               )}
-              <label htmlFor="empty1">Select Hours</label>
+              <label htmlFor="empty1">{t("selectHours")}</label>
 
               {[1, 2, 3, 4].map((item) => (
                 <Fragment key={item}>
@@ -222,7 +224,7 @@ export default function GPACalculator() {
           </div>
 
           <div className="dropdown">
-            <div className="title">Grade</div>
+            <div className="title">{t("grade")}</div>
             <div
               ref={inputGrade}
               id="Grade"
@@ -231,7 +233,7 @@ export default function GPACalculator() {
               }`}
               onClick={handleIputBox}
             >
-              {grade ? grade : "Select Grade"}
+              {grade ? grade : t("selectGrade")}
             </div>
 
             <div className="list">
@@ -253,7 +255,7 @@ export default function GPACalculator() {
                   onChange={handleGradeChange}
                 />
               )}
-              <label htmlFor="empty">Select Grade</label>
+              <label htmlFor="empty">{t("selectGrade")}</label>
 
               {grades.map(({ name }) => (
                 <Fragment key={name}>
@@ -272,7 +274,7 @@ export default function GPACalculator() {
           </div>
 
           <button className="btn-add" type="submit">
-            Add
+            {t("add")}
           </button>
         </form>
       </div>
@@ -280,17 +282,17 @@ export default function GPACalculator() {
         <>
           <div className="tasks">
             <div className="bar-tasks">
-              <h2>Courses list</h2>
+              <h2>{t("coursesList")}</h2>
             </div>
 
             <div className="responsive-table">
               <table className="gpa-table">
                 <thead>
                   <tr>
-                    <th className="course-name">Course name</th>
-                    <th>Credits hours</th>
-                    <th>Course grading</th>
-                    <th></th>
+                    <th className="course-name">{t("courseName")}</th>
+                    <th>{t("creditHours")}</th>
+                    <th>{t("courseGrading")}</th>
+                    <th>{t("actions")}</th>
                   </tr>
                 </thead>
               </table>
@@ -325,7 +327,7 @@ export default function GPACalculator() {
           </div>
           <div className="result">
             <div className="result-content">
-              <h4>GPA Calculator :</h4>
+              <h4>{t("gpaCalculator")} :</h4>
               <span className="result-value">{resultCalc}</span>
             </div>
           </div>
@@ -337,7 +339,7 @@ export default function GPACalculator() {
           closeDialog={closeDialog}
           handleDelete={handleDelete}
           todoId={courseId}
-          content="Are you sure you want to delete the course name?"
+          content={t("deleteCourseConfirm")}
         />
       )}
     </section>

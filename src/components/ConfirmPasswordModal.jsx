@@ -3,11 +3,13 @@ import { useState } from "react";
 import DeleteIcon from "../Icons/DeleteIcon";
 import HideEyeIcon from "../Icons/HideEyeIcon";
 import EyeIcon from "../Icons/EyeIcon";
+import { useTranslation } from "react-i18next";
 
 export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -25,16 +27,16 @@ export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
       <div className="allert">
         <div className="top-allert">
           <DeleteIcon className="end-trash" size={40} />
-          <h2 className="msg-sure">Confirm your password</h2>
+          <h2 className="msg-sure">{t("confirmPassword")}</h2>
         </div>
         <form onSubmit={handleSubmit} className="confirm-box">
           <label>
-            Password
+            {t("password")}
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder={t("enterPassword")}
               required
             />
             {showPassword ? (
@@ -44,7 +46,7 @@ export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
             )}
           </label>
           {passwordError && (
-            <p className="mes-error pass">Minimum 8 characters are required</p>
+            <p className="mes-error pass">{t("minCharacters")}</p>
           )}
           <div className="bottom-allert">
             <button
@@ -52,7 +54,7 @@ export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
               type="submit"
               disabled={loading}
             >
-              Confirm
+              {t("confirm")}
             </button>
             <button
               className="btn-sure delete"
@@ -60,7 +62,7 @@ export default function ConfirmPasswordModal({ onClose, onConfirm, loading }) {
               onClick={onClose}
               disabled={loading}
             >
-              Cancel
+              {t("cancel")}
             </button>
           </div>
 

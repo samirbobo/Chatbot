@@ -28,7 +28,17 @@
   --dropdown-bg: #f9fafb;
   --box-shadow: 0px 1px 2px 0px #1018280f,
     0px 1px 3px 0px #1018281a;
+  --box-shadow-2: 0px 2px 4px -2px #1018280f, 0px 4px 8px -2px #1018281a;
   --scrollbar-bg: hsla(0, 0%, 89%, 0.8);
+  --allert--bg: #ffffff;
+  --loading-bg: #0000001a;
+  --button-bg: #ececec;
+  --dropdown-model-bg: #ffffff;
+  --dropdown-li-bg: #0000000a;
+  --dropdown-li-text: #0d0d0d;
+  --back-bg: #0E0E0E47;
+  --dropdown-shadow: 0px 6px 18px rgba(0, 0, 0, 0.25),
+    0px 3px 6px rgba(0, 0, 0, 0.15);
 
   /* 🎨 New variables */
   --sidebar-bg: #ffffff;
@@ -63,8 +73,18 @@
   --dropdown-bg: #303030;
   --box-shadow: 0px 1px 2px 0px rgba(255, 255, 255, 0.12),
     0px 1px 4px 0px rgba(255, 255, 255, 0.16);
+  --box-shadow-2: 0px 2px 4px -2px rgba(255, 255, 255, 0.12), 0px 4px 8px -2px rgba(255, 255, 255, 0.16);
   --scrollbar-bg: #2A2A2ACC;
   --setting-border: #E2E6EE;
+  --allert--bg: #2f2f2f;
+  --loading-bg: #00000085;
+  --button-bg: #424242;
+  --dropdown-model-bg: #353535;
+  --dropdown-li-bg: #ffffff1a;
+  --dropdown-li-text: #fff;
+  --back-bg: #00000085;
+  --dropdown-shadow: 0px 8px 22px rgba(0, 0, 0, 0.7),
+    0px 4px 10px rgba(0, 0, 0, 0.5);
 
   --sidebar-bg: #181818;
   --sidebar-active: #303030;
@@ -87,6 +107,16 @@ body {
   background: var(--body-color);
 }
 
+html[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
 a {
   text-decoration: none;
 }
@@ -95,7 +125,7 @@ a {
 .sidebar {
   background: var(--sidebar-bg);
   position: fixed;
-  left: 0px;
+  inset-inline-start: 0;
   top: 0px;
   width: var(--width-sidebar-close);
   height: 100vh;
@@ -103,7 +133,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid var(--sidebar-border);
+  border-inline-end: 1px solid var(--sidebar-border);
   transition: var(--trans-03);
   z-index: 1;
 }
@@ -225,59 +255,10 @@ button.link {
   margin-bottom: 0.5rem;
 }
 
-.container-mode {
-  display: flex;
-  align-items: center;
-  background-color: var(--body-color);
-  padding: 0.5rem;
-  gap: 1rem;
-  border-radius: 6px;
-}
-
-.mode {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 6px 0.75rem;
-  cursor: pointer;
-  transition: var(--trans-03);
-}
-
-.mode.active,
-.mode:hover {
-  background-color: var(--mode-active-bg);
-  border-radius: 6px;
-  border: 1px solid var(--mode-active-border);
-}
-
-.mode i {
-  display: flex;
-  transition: var(--trans-03);
-}
-
-.mode .icon path {
-  fill: var(--icon-stroke);
-  transition: var(--trans-03);
-}
-
-.mode p {
-  font-weight: 500;
-  line-height: 24px;
-  color: var(--link-color);
-  transition: var(--trans-03);
-}
-
-.mode.active p,
-.mode:hover p {
-  color: var(--mode-active-text);
-}
-
 /* ====================== main section ====================== */
 .main-section {
   position: relative;
-  left: var(--width-sidebar-close);
+  inset-inline-start: var(--width-sidebar-close);
   width: calc(100% - var(--width-sidebar-close));
   background: var(--body-color);
   padding: 3rem 2rem 1rem;
@@ -286,7 +267,7 @@ button.link {
 }
 
 .main-section.active {
-  left: var(--width-sidebar-open);
+  inset-inline-start: var(--width-sidebar-open);
   width: calc(100% - var(--width-sidebar-open));
 }
 
@@ -296,7 +277,7 @@ button.link {
   }
 
   .main-section.active {
-    left: var(--width-sidebar-close);
+    inset-inline-start: var(--width-sidebar-close);
     width: calc(100% - var(--width-sidebar-close));
   }
 
@@ -352,7 +333,7 @@ button.link {
 
 .chatbot .input-question .icon {
   /* left: 35px; */
-  right: 35px;
+  inset-inline-end: 35px;
   position: absolute;
   top: 43px;
   transition: var(--trans-03);
@@ -407,7 +388,9 @@ input[type="file"]::-webkit-file-upload-button {
   height: 47px;
   max-height: 160px;
   /* padding: 10px 14px 10px 38px; */
-  padding: 10px 60px 10px 14px;
+  padding-block: 10px;
+  padding-inline-end: 60px;
+  padding-inline-start: 14px;
   border-radius: 8px;
   font-family: "inter";
   border: 1px solid var(--mode-active-border);
@@ -543,8 +526,8 @@ input[type="file"]::-webkit-file-upload-button {
 
 .chatbot .chatbot-box .answer>i .show-copy {
   opacity: 0;
-  width: 61px;
-  max-width: 61px;
+  width: 65px;
+  max-width: 65px;
   visibility: hidden;
   position: absolute;
   top: 28px;
@@ -597,7 +580,7 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .loader {
-  margin-left: 24px;
+  margin-inline-start: 24px;
   margin-top: 12px;
   width: 16px;
   height: 16px;
@@ -667,7 +650,7 @@ input[type="file"]::-webkit-file-upload-button {
   }
 
   .chatbot .input-question .icon {
-    right: 20px;
+    inset-inline-end: 20px;
   }
 
   .container-upload-icon {
@@ -675,7 +658,7 @@ input[type="file"]::-webkit-file-upload-button {
   }
 
   .chatbot .input-question .input {
-    padding-right: 55px;
+    padding-inline-end: 55px;
   }
 
   .chatbot .chatbot-box .question,
@@ -776,7 +759,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: block;
   margin-top: 0;
   margin-bottom: 1rem;
-  text-align: left;
+  text-align: start;
 }
 
 .login-box form input,
@@ -812,7 +795,7 @@ input[type="file"]::-webkit-file-upload-button {
 .login-box form label .icon,
 .confirm-box label .icon {
   position: absolute;
-  right: 1rem;
+  inset-inline-end: 1rem;
   bottom: 0.75rem;
   cursor: pointer;
 }
@@ -1136,7 +1119,7 @@ input[type="file"]::-webkit-file-upload-button {
   position: absolute;
   font-size: 18px;
   top: 50%;
-  right: 15px;
+  inset-inline-end: 15px;
   transform: translate(0, -50%);
   width: fit-content;
   height: fit-content;
@@ -1158,7 +1141,7 @@ input[type="file"]::-webkit-file-upload-button {
 .list {
   position: absolute;
   top: 100%;
-  left: 0;
+  inset-inline-start: 0;
   width: 100%;
   height: fit-content;
   background: var(--sidebar-bg);
@@ -1207,7 +1190,7 @@ input[type="file"]::-webkit-file-upload-button {
   font-family: "Material Icons";
   position: absolute;
   top: 50%;
-  right: 15px;
+  inset-inline-end: 15px;
   transform: translate(0, -50%);
   font-size: 18px;
   color: var(--icon-color);
@@ -1239,8 +1222,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 
 .not-found-page h1 {
   font-size: 6rem;
+  color: var(--sidebar-text);
 }
 
 .not-found-page h2 {
   margin-bottom: 2rem;
+  color: var(--sidebar-text);
+}
+
+.not-found-page p {
+  color: var(--sidebar-text);
 }

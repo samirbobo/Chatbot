@@ -9,6 +9,7 @@
   align-items: end;
   column-gap: 0.5rem;
 }
+
 .gpa-calculator .btn-add {
   margin-left: 0px;
 }
@@ -26,11 +27,13 @@
   width: 232px;
   transition: var(--trans-03);
 }
+
 .gpa-calculator .value-input {
   padding: 15px 1rem;
   appearance: none;
   width: 100%;
 }
+
 .first-option {
   color: #a3a7b5;
   font-weight: 400;
@@ -38,9 +41,11 @@
   font-size: 1rem;
   transition: 0.2s linear;
 }
+
 .custom-select {
   position: relative;
 }
+
 .custom-select::after {
   content: "";
   --size: 0.5rem;
@@ -53,6 +58,7 @@
   top: 72%;
   transform: translateY(-50%);
 }
+
 .custom-select::before {
   content: "";
   --size: 0.4rem;
@@ -72,15 +78,18 @@
   margin-top: 1rem;
   border-radius: 1rem;
 }
+
 .gpa-calculator .bar-tasks {
   min-width: 100%;
 }
+
 .bar-tasks h2 {
   font-weight: 600;
   font-size: 32px;
   line-height: 41.6px;
   color: var(--gba-label);
 }
+
 .responsive-table {
   overflow: auto;
 }
@@ -92,6 +101,7 @@
   min-width: 900px;
   border-radius: 1rem;
 }
+
 .gpa-table {
   border-collapse: collapse;
   width: 100%;
@@ -99,21 +109,26 @@
   transition: var(--trans-03);
   min-width: 900px;
 }
+
 .tbl-content .gpa-table {
   width: 100%;
   min-width: 100%;
 }
+
 .gpa-table thead {
   background: var(--sidebar-bg);
 }
+
 .gpa-table thead tr {
   border-bottom: 1px solid var(--gba-border-2);
 }
+
 .gpa-table tr .course-name,
 .gpa-table tbody .course-name {
   padding: 12px 24px;
-  text-align: left;
+  text-align: center;
 }
+
 .gpa-table td,
 .gpa-table th {
   padding: 12px 24px;
@@ -124,6 +139,7 @@
 .tr-item {
   background: var(--sidebar-bg);
 }
+
 .tr-item:nth-child(odd) {
   background-color: var(--body-color);
 }
@@ -133,6 +149,7 @@
   display: grid;
   place-content: center;
 }
+
 .result .result-content {
   width: 313px;
   height: 115px;
@@ -140,18 +157,19 @@
   border-radius: 12px;
   background: #036666;
   color: white;
-  box-shadow: 0px 2px 4px -2px #1018280f, 0px 4px 8px -2px #1018281a;
+  box-shadow: var(--box-shadow-2);
   transition: var(--trans-03);
 }
+
 .result h4 {
   font-family: "Inter";
   font-size: 1rem;
   font-weight: 600;
   line-height: 24px;
-  text-align: left;
   padding-bottom: 1rem;
   transition: var(--trans-03);
 }
+
 .result .result-value {
   font-family: "Inter";
   font-size: 2rem;
@@ -167,51 +185,72 @@
     padding: 1rem;
   }
 }
+
 @media (max-width: 768px) {
   .gpa-calculator .adding {
     padding: 1rem;
   }
 }
+
 @media (max-width: 600px) {
   .gpa-calculator .adding {
     border: none;
     padding: 1rem 0;
   }
+
   .gpa-calculator .add-task {
     flex-direction: column;
     align-items: center;
     row-gap: 0.5rem;
   }
+
   .add-task label {
     width: 100%;
   }
+
   .gpa-calculator .add-task .btn-add {
     width: 100%;
     margin-top: 0.5rem;
   }
 }
+
 @media (max-width: 768px) {
   .gpa-calculator .btn-add {
     width: 75px;
   }
+
+  .bar-tasks h2 {
+    font-size: 24px;
+    line-height: normal;
+  }
 }
+
 @media (max-width: 480px) {
   .custom-select::before {
     top: 69%;
   }
+
   .result {
     justify-content: normal;
   }
+
   .result .result-content {
     width: 100%;
     height: 85px;
     padding: 8px 16px;
   }
+
   .result h4 {
     padding-bottom: 0.5rem;
   }
+
   .result .result-value {
     font-size: 20px;
     line-height: 28px;
+  }
+
+  .bar-tasks h2 {
+    font-size: 18px;
+    line-height: 150%;
   }
 }

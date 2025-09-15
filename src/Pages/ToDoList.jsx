@@ -12,6 +12,7 @@ import {
 } from "../APIS";
 import { UseGlobalUser } from "../auth/AuthUser";
 import ErrorAlert from "../components/ErrorAlert";
+import { useTranslation } from "react-i18next";
 
 export default function ToDoList() {
   const { user } = UseGlobalUser();
@@ -23,12 +24,13 @@ export default function ToDoList() {
   const [todoDesc, setTodoDesc] = useState("");
   const [originalTodos, setOriginalTodos] = useState([]);
   const [todos, setTodos] = useState([]);
-  const [todoToShow, setTodoToShow] = useState("All");
   const [activeButton, setActiveButton] = useState(0);
   const [editId, setEditId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [todoId, setTodoId] = useState(null);
   const inputRef = useRef();
+  const { t } = useTranslation();
+  const [todoToShow, setTodoToShow] = useState(t("all"));
 
   useEffect(() => {
     const getTasks = async () => {
@@ -58,7 +60,7 @@ export default function ToDoList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validName =
-      /^(?:[1-9]-[a-zA-Z][a-zA-Z0-9]*|[a-zA-Z][a-zA-Z0-9]*)(?!.*[-$#!@%^&*{}[()\]></?"_+=.~-])/;
+      /^(?:[1-9]-[\p{L}][\p{L}0-9]*|[\p{L}][\p{L}0-9]*)(?!.*[-$#!@%^&*{}[()\]></?"_+=.~-])/u;
 
     if (!validName.test(todoDesc)) {
       setErrorInput(true);
@@ -125,7 +127,7 @@ export default function ToDoList() {
         ...todos,
       ];
 
-      if (todoDesc !== "" && todoToShow !== "Completed") {
+      if (todoDesc !== "" && todoToShow !== t("completed")) {
         setTodos(newTodos);
       }
       setOriginalTodos(newTodosOriginal);
@@ -198,12 +200,13 @@ export default function ToDoList() {
           return task;
         }
       });
-      if (todoToShow === "All") {
+      console.log(todoToShow);
+      if (todoToShow === t("all")) {
         setTodos(completeTask);
-      } else if (todoToShow === "Active") {
+      } else if (todoToShow === t("active")) {
         const newTasks = completeTask.filter((todo) => !todo.completed);
         setTodos(newTasks);
-      } else if (todoToShow === "Completed") {
+      } else if (todoToShow === t("completed")) {
         const newTasks = completeTask.filter((todo) => todo.completed);
         setTodos(newTasks);
       }
@@ -226,12 +229,12 @@ export default function ToDoList() {
     setTodoToShow(activeBtnName);
     setActiveButton(indexBtn);
 
-    if (activeBtnName === "All") {
+    if (activeBtnName === t("all")) {
       setTodos(originalTodos);
-    } else if (activeBtnName === "Active") {
+    } else if (activeBtnName === t("active")) {
       const newTasks = originalTodos.filter((todo) => !todo.completed);
       setTodos(newTasks);
-    } else if (activeBtnName === "Completed") {
+    } else if (activeBtnName === t("completed")) {
       const newTasks = originalTodos.filter((todo) => todo.completed);
       setTodos(newTasks);
     }
@@ -248,11 +251,11 @@ export default function ToDoList() {
   return (
     <section className="to-do-list">
       <div className="div-tittle">
-        <h2 className="tittle">To Do List</h2>
-        <span className="min-tittle">enter your task</span>
+        <h2 className="tittle">{t("todoList")}</h2>
+        <span className="min-tittle">{t("enterTask")}</span>
       </div>
       <div className="adding">
-        <h5 className="add-tittle">Add New Task</h5>
+        <h5 className="add-tittle">{t("addNewTask")}</h5>
         <form onSubmit={handleSubmit} className="add-task">
           <input
             className={`value-input ${errorInput && "error-input"}`}
@@ -262,29 +265,25 @@ export default function ToDoList() {
               setTodoDesc(e.target.value);
               setErrorInput(false);
             }}
-            placeholder="add...."
+            placeholder={t("newTask")}
             ref={inputRef}
           />
           <button className="btn-add" type="submit" disabled={loading}>
-            {editId ? "Edit" : "Add"}
+            {editId ? t("edit") : t("add")}
           </button>
         </form>
-        {errorInput && (
-          <p className="mes-error todo-error">
-            A task cannot contain symbols or begin with numbers
-          </p>
-        )}
+        {errorInput && <p className="mes-error todo-error">{t("todoError")}</p>}
       </div>
       {showTasks && (
         <div className="tasks">
           <div className="bar-tasks">
-            {["All", "Active", "Completed"].map((btnName, index) => (
+            {[t("all"), t("active"), t("completed")].map((btnName, index) => (
               <button
                 key={btnName}
                 onClick={() => updateTodoToShow(btnName, index)}
                 className={activeButton === index ? "true-btn btn" : "btn"}
               >
-                {btnName === "All" ? btnName.toUpperCase() : btnName}
+                {btnName === t("all") ? btnName.toUpperCase() : btnName}
               </button>
             ))}
           </div>
@@ -338,7 +337,7 @@ export default function ToDoList() {
           closeDialog={closeDialog}
           handleDelete={handleDelete}
           todoId={todoId}
-          content="Are you sure you want to delete the task?"
+          content={t("deleteTaskConfirm")}
           loadingAlert={loadingAlert}
         />
       )}

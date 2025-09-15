@@ -10,21 +10,29 @@ import LeftIcon from "../Icons/LeftIcon";
 import RightIcon from "../Icons/RightIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
 import avater from "../images/avater.png";
-import DarkIcon from "../Icons/DarkIcon";
-import LightIcon from "../Icons/LightIcon";
-import { useTheme } from "../context/ThemeContext";
+import { useTranslation } from "react-i18next";
+import useDirection from "../hooks/useDirection";
+import SettingModel from "./SettingModel";
+import { useState } from "react";
+import PersonIcon from "../Icons/PersonIcon";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
   const { logout, user, getFileViewURL } = UseGlobalUser();
-  const { theme, setTheme } = useTheme();
+  const [openSetting, setOpenSetting] = useState(false);
+  const { t } = useTranslation();
+  useDirection();
 
   let userImage;
   if (user?.prefs?.profileImage) {
     userImage = getFileViewURL(user?.prefs?.profileImage);
   }
 
-  const handleStatusMode = (mode) => {
-    setTheme(mode);
+  const handleOpenSetting = () => {
+    setOpenSetting(true);
+  };
+
+  const handleCloseSetting = () => {
+    setOpenSetting(false);
   };
 
   return (
@@ -38,54 +46,38 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
             <i>
               <ChatbotIcon />
             </i>
-            <p className="text">EduGuide</p>
+            <p className="text">{t("EduGuide")}</p>
           </NavLink>
           <NavLink to="/gpa-calculator" className="link">
             <i>
               <GpaCalculator />
             </i>
-            <p className="text">GPA Calculator</p>
+            <p className="text">{t("gpaCalculator")}</p>
           </NavLink>
           <NavLink to="/to-do-list" className="link">
             <i>
               <ToDoListIcon />
             </i>
-            <p className="text">To Do List</p>
+            <p className="text">{t("todoList")}</p>
           </NavLink>
           <NavLink to="/setting" className="link">
             <i>
+              <PersonIcon />
+            </i>
+            <p className="text">{t("profile")}</p>
+          </NavLink>
+          <button className="link" onClick={handleOpenSetting}>
+            <i>
               <SettingIcon />
             </i>
-            <p className="text">Setting</p>
-          </NavLink>
+            <p className="text">{t("setting")}</p>
+          </button>
           <button className="link" onClick={logout}>
             <i>
               <LogoutIcon />
             </i>
-            <p className="text">Log out</p>
+            <p className="text">{t("logout")}</p>
           </button>
-
-          <div className="container-mode">
-            <div
-              className={`mode ${theme === "light" && "active"}`}
-              onClick={() => handleStatusMode("light")}
-            >
-              <i>
-                <LightIcon />
-              </i>
-              <p>Light</p>
-            </div>
-
-            <div
-              className={`mode ${theme === "dark" && "active"}`}
-              onClick={() => handleStatusMode("dark")}
-            >
-              <i>
-                <DarkIcon />
-              </i>
-              <p>Dark</p>
-            </div>
-          </div>
         </nav>
       </div>
       <div className="sidebar-footer">
@@ -104,6 +96,8 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
       <button className="arow-sidebar" onClick={handleShowSidebar}>
         {openSidebar ? <LeftIcon /> : <RightIcon />}
       </button>
+
+      {openSetting && <SettingModel onClose={handleCloseSetting} />}
     </aside>
   );
 }

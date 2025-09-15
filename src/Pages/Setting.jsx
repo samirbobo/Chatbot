@@ -8,6 +8,7 @@ import ErrorAlert from "../components/ErrorAlert";
 import { account, APPWRITE_BUCKET_ID, storage } from "../lib/appwrite";
 import ConfirmPasswordModal from "../components/ConfirmPasswordModal";
 import { ID } from "appwrite";
+import { useTranslation } from "react-i18next";
 
 export default function Setting() {
   const { user, logout, setUser, getInitialUserValue, getFileViewURL } =
@@ -20,6 +21,7 @@ export default function Setting() {
   const [emailError, setEmailError] = useState(null);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [pendingData, setPendingData] = useState(null);
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     id: user?.id,
     name: user?.name,
@@ -202,8 +204,8 @@ export default function Setting() {
     <>
       <article className="setting-title">
         <div className="content-title">
-          <h2>Setting </h2>
-          <p>You can view your account settings</p>
+          <h2>{t("profile")}</h2>
+          <p>{t("settingsInfo")}</p>
         </div>
         <div className="avater">
           <img src={formData.image ? formData.image : avater} alt="Avater" />
@@ -222,44 +224,42 @@ export default function Setting() {
 
       <article className="settin-content">
         <div className="setting-body">
-          <h3>Personal details</h3>
+          <h3>{t("personalDetails")}</h3>
           <hr />
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Ful Name</label>
+            <label htmlFor="name">{t("fullName")}</label>
             <input
               type="text"
               value={formData.name}
               name="name"
               id="name"
-              placeholder="Edit your name"
+              placeholder={t("editName")}
               onChange={handleInputChange}
             />
-            {nameError && <p className="mes-error">Not Invalid Name</p>}
+            {nameError && <p className="mes-error">{t("invalidName")}</p>}
 
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t("email")}</label>
             <input
               type="email"
               value={formData.email}
               name="email"
               id="email"
-              placeholder="Edit your email"
+              placeholder={t("editEmail")}
               onChange={handleInputChange}
             />
-            {emailError && (
-              <p className="mes-error">Invalid email enter example@gmail.com</p>
-            )}
+            {emailError && <p className="mes-error">{t("invalidEmail")}</p>}
             <button
               type="submit"
               className={`btn-edit settin-btn ${noDrop ? "no-drop" : ""}`}
               onMouseOver={handleDropMouse}
             >
-              Edit
+              {t("edit")}
             </button>
             <button
               className="btn-delete settin-btn"
               onClick={() => setModalOpen(true)}
             >
-              Delete Account
+              {t("deleteAccount")}
             </button>
           </form>
         </div>

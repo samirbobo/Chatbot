@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useTranslation } from "react-i18next";
 import DeleteIcon from "../Icons/DeleteIcon";
 
 export default function AlertModel({
@@ -8,6 +9,8 @@ export default function AlertModel({
   content,
   loadingAlert,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="back">
       <div className="allert">
@@ -17,14 +20,14 @@ export default function AlertModel({
         </div>
         <div className="bottom-allert">
           <button className="btn-sure cancel" onClick={closeDialog}>
-            Cancel
+            {t("cancel")}
           </button>
           <button
             className="btn-sure delete"
             onClick={() => handleDelete(todoId)}
             disabled={loadingAlert}
           >
-            Delete
+            {t("delete")}
           </button>
         </div>
         {loadingAlert && (

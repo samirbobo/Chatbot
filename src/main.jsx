@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import AuthProvider from "./auth/AuthUser.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import "./i18n.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

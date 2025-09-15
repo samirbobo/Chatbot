@@ -13,6 +13,7 @@ import {
 } from "../lib/appwrite";
 import { ID } from "appwrite";
 import { useTheme } from "../context/ThemeContext";
+import { reomveLanguage } from "../hooks/useDirection";
 
 const AuthUser = createContext(null);
 
@@ -108,6 +109,7 @@ const AuthProvider = ({ children }) => {
     setShowResult(false);
     setTheme("light");
     localStorage.removeItem("theme");
+    reomveLanguage();
   };
 
   const getFileViewURL = (fileId) =>

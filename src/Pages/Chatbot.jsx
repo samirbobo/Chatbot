@@ -6,6 +6,7 @@ import { UseGlobalUser } from "../auth/AuthUser";
 import WariningIcon from "../Icons/WariningIcon";
 import { Fragment } from "react";
 import avater from "../images/avater.png";
+import { useTranslation } from "react-i18next";
 
 export default function Chatbot() {
   const {
@@ -20,6 +21,7 @@ export default function Chatbot() {
     getFileViewURL,
     chatContainerRef,
   } = UseGlobalUser();
+  const { t } = useTranslation();
 
   let userImage;
   if (user?.prefs?.profileImage) {
@@ -35,9 +37,9 @@ export default function Chatbot() {
       ""
     );
     let showCopy = e.target.closest(".answer").querySelector(".show-copy");
-    showCopy.innerHTML = "Copied";
+    showCopy.innerHTML = t("copied");
     setTimeout(() => {
-      showCopy.innerHTML = "Copy";
+      showCopy.innerHTML = t("copy");
     }, 1000);
     navigator.clipboard.writeText(answerContent);
   };
@@ -71,8 +73,8 @@ export default function Chatbot() {
 
   return (
     <section className="chatbot">
-      <h2>How can I help you today?</h2>
-      <p>enter your question to know the best answer</p>
+      <h2>{t("chatbotHelpTitle")}</h2>
+      <p>{t("chatbotHelpPlaceholder")}</p>
       <div className="input-question">
         {input.image && (
           <img
@@ -83,7 +85,7 @@ export default function Chatbot() {
         )}
         <textarea
           className="input"
-          placeholder="Message Chatbot..."
+          placeholder={t("chatbotTitle")}
           value={input.question}
           disabled={loading}
           onChange={(e) => setInput({ ...input, question: e.target.value })}
@@ -109,10 +111,7 @@ export default function Chatbot() {
           <i>
             <WariningIcon />
           </i>
-          <span>
-            Please be more specific in your questions. Our chatbot may make
-            mistakes.
-          </span>
+          <span>{t("chatbotWarning")}</span>
         </div>
       </div>
       {showResult && (
@@ -150,7 +149,7 @@ export default function Chatbot() {
                 {result.copyLoading && (
                   <i>
                     <CopyIcon onClick={handleCopyText} />
-                    <p className="show-copy">Copy</p>
+                    <p className="show-copy">{t("copy")}</p>
                   </i>
                 )}
               </article>

@@ -11,7 +11,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--body-color);
+  background-color: transparent;
   border-radius: 9999px;
 }
 
@@ -111,7 +111,7 @@ ul {
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  margin-left: 2rem;
+  margin-inline-start: 2rem;
   transition: 0.3s linear;
 }
 
@@ -127,7 +127,7 @@ ul {
 .tasks {
   position: relative;
   /* overflow: auto; */
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 1rem;
   margin-top: 2rem;
   box-shadow: var(--box-shadow);
 }
@@ -157,7 +157,7 @@ ul {
 }
 
 .btn:not(:last-child) {
-  margin-right: 1rem;
+  margin-inline-end: 1rem;
 }
 
 .true-btn,
@@ -181,6 +181,7 @@ ul {
     5- bar-tasks height : 70px
   */
   max-height: calc((100vh - 4rem) - 85px - 3rem - 70px - 145px);
+  border-radius: 0 0 1rem 1rem;
 }
 
 .body-loader {
@@ -189,7 +190,7 @@ ul {
   right: 0;
   bottom: 0;
   border-radius: 1rem 1rem 0 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--loading-bg);
   position: absolute;
   z-index: 1;
   display: grid;
@@ -364,7 +365,8 @@ ul {
 /* ------------------------------------------------------------- */
 .back {
   position: fixed;
-  background-color: #0e0e0e47;
+  backdrop-filter: blur(1px);
+  background: var(--back-bg);
   top: 0;
   bottom: 0;
   right: 0;
@@ -377,10 +379,10 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--sidebar-bg);
+  background: var(--allert--bg);
   padding: 32px;
   border-radius: 20px;
-  max-width: 412px;
+  max-width: 420px;
   width: 90vw;
   box-shadow: 0px 1px 2px 0px #1018280f, 0px 1px 3px 0px #1018281a;
   transition: 0.3s linear;
@@ -438,7 +440,7 @@ ul {
 }
 
 .btn-sure:not(:last-child) {
-  margin-right: 12px;
+  margin-inline-end: 12px;
 }
 
 .cancel:hover {
@@ -474,7 +476,7 @@ ul {
   }
 
   .btn-sure:not(:last-child) {
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
 
   .btn-sure {

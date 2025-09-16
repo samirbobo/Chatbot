@@ -309,6 +309,7 @@ button.link {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--sidebar-text);
+  max-width: 210px;
 }
 
 .sidebar-footer .footer-info h4 {
@@ -371,6 +372,11 @@ button.link {
 
   .main-section {
     padding: 1rem;
+  }
+
+  .footer-info h4,
+  .footer-info p {
+    max-width: 175px;
   }
 }
 
@@ -768,7 +774,7 @@ input[type="file"]::-webkit-file-upload-button {
     text-align: center;
   }
 
-    .header-content .subtitle {
+  .header-content .subtitle {
     font-size: 14px;
     text-align: center;
     line-height: 150%;

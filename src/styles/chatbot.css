@@ -39,6 +39,8 @@
   --back-bg: #0E0E0E47;
   --dropdown-shadow: 0px 6px 18px rgba(0, 0, 0, 0.25),
     0px 3px 6px rgba(0, 0, 0, 0.15);
+  --sidebar-icon: #626C83;
+  --overlay-bg: #00000066;
 
   /* 🎨 New variables */
   --sidebar-bg: #ffffff;
@@ -85,6 +87,8 @@
   --back-bg: #00000085;
   --dropdown-shadow: 0px 8px 22px rgba(0, 0, 0, 0.7),
     0px 4px 10px rgba(0, 0, 0, 0.5);
+  --sidebar-icon: #fff;
+  --overlay-bg: #00000080;
 
   --sidebar-bg: #181818;
   --sidebar-active: #303030;
@@ -144,6 +148,61 @@ a {
 
 .navigation-header {
   margin-bottom: 1.5rem;
+}
+
+.sidebar.active .navigation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar:not(.active) .navigation-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: flex-start;
+}
+
+.sidebar:not(.active) .navigation-header .logo-icon {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-icon {
+  display: flex;
+  background: transparent;
+  border: transparent;
+  cursor: pointer;
+}
+
+.sidebar-icon .icon path {
+  stroke: var(--sidebar-icon);
+}
+
+.sidebar:not(.active) .navigation-header .sidebar-icon {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s linear;
+  background: transparent;
+  border: none;
+  cursor: e-resize;
+  margin-right: 0.7rem;
+}
+
+.sidebar:not(.active):hover .navigation-header .logo-icon {
+  opacity: 0;
+}
+
+.sidebar:not(.active):hover {
+  cursor: e-resize;
+}
+
+.sidebar:not(.active):hover .navigation-header .sidebar-icon {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
 }
 
 .navigation-header .icon {
@@ -233,6 +292,7 @@ button.link {
   align-items: center;
   column-gap: 1rem;
   overflow: hidden;
+  cursor: auto;
 }
 
 .person {
@@ -272,26 +332,41 @@ button.link {
 }
 
 @media (max-width: 768px) {
+  .sidebar {
+    inset-inline-start: -100%;
+    transition: left 0.3s ease-in-out;
+    z-index: 999;
+  }
+
   .sidebar.active {
-    width: var(--width-sidebar-close);
+    width: 250px;
+    inset-inline-start: 0;
+  }
+
+  .main-section {
+    width: 100%;
+    inset-inline-start: 0;
+    transition: 0.3s ease;
   }
 
   .main-section.active {
-    inset-inline-start: var(--width-sidebar-close);
-    width: calc(100% - var(--width-sidebar-close));
+    width: 100%;
+    inset-inline-start: 0;
   }
 
-  .sidebar.active .text {
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--overlay-bg);
+    z-index: 998;
     opacity: 0;
-    overflow: hidden;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
   }
 
-  .arow-sidebar {
-    display: none;
-  }
-
-  .sidebar-footer .footer-info {
-    display: none;
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
   }
 
   .main-section {
@@ -300,7 +375,23 @@ button.link {
 }
 
 /* ====================== Chatbot Page ====================== */
-.chatbot h2 {
+.header-container {
+  align-items: flex-start;
+  display: flex;
+  column-gap: .5rem;
+}
+
+.header-container .sidebar-icon {
+  display: none;
+}
+
+.header-container .header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.header-content h2 {
   font-weight: 600;
   font-size: 2rem;
   line-height: 41.6px;
@@ -308,7 +399,7 @@ button.link {
   transition: var(--trans-03);
 }
 
-.chatbot>p {
+.header-content .subtitle {
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
@@ -634,17 +725,6 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 @media (max-width: 560px) {
-  .chatbot h2 {
-    font-size: 1.5rem;
-    line-height: normal;
-    margin-bottom: 0.6rem;
-  }
-
-  .chatbot p {
-    font-size: 14px;
-    line-height: normal;
-  }
-
   .chatbot .input-question {
     padding: 2rem 0.5rem;
   }
@@ -674,6 +754,27 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 @media (max-width: 768px) {
+  .header-content {
+    flex: 1;
+  }
+
+  .header-container .sidebar-icon {
+    display: block;
+  }
+
+  .header-content h2 {
+    font-size: 20px;
+    line-height: 140%;
+    text-align: center;
+  }
+
+    .header-content .subtitle {
+    font-size: 14px;
+    text-align: center;
+    line-height: 150%;
+    font-weight: 400;
+  }
+
   .chatbot .chatbot-box {
     height: calc((100vh - 4rem) - 42px - 27px - 105px);
   }

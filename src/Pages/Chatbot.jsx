@@ -7,6 +7,7 @@ import WariningIcon from "../Icons/WariningIcon";
 import { Fragment } from "react";
 import avater from "../images/avater.png";
 import { useTranslation } from "react-i18next";
+import HeaderPage from "../components/HeaderPage";
 
 export default function Chatbot() {
   const {
@@ -73,8 +74,10 @@ export default function Chatbot() {
 
   return (
     <section className="chatbot">
-      <h2>{t("chatbotHelpTitle")}</h2>
-      <p>{t("chatbotHelpPlaceholder")}</p>
+      <HeaderPage
+        title={"chatbotHelpTitle"}
+        subTitle={"chatbotHelpPlaceholder"}
+      />
       <div className="input-question">
         {input.image && (
           <img

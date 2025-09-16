@@ -6,8 +6,6 @@ import ToDoListIcon from "../Icons/ToDoListIcon";
 import SettingIcon from "../Icons/SettingIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import SidebarIcon from "../Icons/SidebarIcon";
-import LeftIcon from "../Icons/LeftIcon";
-import RightIcon from "../Icons/RightIcon";
 import { UseGlobalUser } from "../auth/AuthUser";
 import avater from "../images/avater.png";
 import { useTranslation } from "react-i18next";
@@ -15,6 +13,7 @@ import useDirection from "../hooks/useDirection";
 import SettingModel from "./SettingModel";
 import { useState } from "react";
 import PersonIcon from "../Icons/PersonIcon";
+import ToggleIcon from "../Icons/ToggleIcon";
 
 export default function Sidebar({ handleShowSidebar, openSidebar }) {
   const { logout, user, getFileViewURL } = UseGlobalUser();
@@ -36,10 +35,21 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
   };
 
   return (
-    <aside className={`sidebar ${openSidebar && "active"}`}>
+    <aside
+      className={`sidebar ${openSidebar && "active"}`}
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !openSidebar) {
+          handleShowSidebar();
+        }
+      }}
+    >
       <div className="navigation">
         <div className="navigation-header">
           <SidebarIcon />
+
+          <button className="sidebar-icon" onClick={handleShowSidebar}>
+            <ToggleIcon />
+          </button>
         </div>
         <nav className="navigation-menu">
           <NavLink to="/" className="link">
@@ -93,9 +103,6 @@ export default function Sidebar({ handleShowSidebar, openSidebar }) {
           <p>{user?.email}</p>
         </article>
       </div>
-      <button className="arow-sidebar" onClick={handleShowSidebar}>
-        {openSidebar ? <LeftIcon /> : <RightIcon />}
-      </button>
 
       {openSetting && <SettingModel onClose={handleCloseSetting} />}
     </aside>

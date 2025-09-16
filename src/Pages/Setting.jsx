@@ -9,6 +9,7 @@ import { account, APPWRITE_BUCKET_ID, storage } from "../lib/appwrite";
 import ConfirmPasswordModal from "../components/ConfirmPasswordModal";
 import { ID } from "appwrite";
 import { useTranslation } from "react-i18next";
+import HeaderPage from "../components/HeaderPage";
 
 export default function Setting() {
   const { user, logout, setUser, getInitialUserValue, getFileViewURL } =
@@ -201,12 +202,10 @@ export default function Setting() {
     );
 
   return (
-    <>
+    <section>
       <article className="setting-title">
-        <div className="content-title">
-          <h2>{t("profile")}</h2>
-          <p>{t("settingsInfo")}</p>
-        </div>
+        <HeaderPage title={"profile"} subTitle={"settingsInfo"} />
+
         <div className="avater">
           <img src={formData.image ? formData.image : avater} alt="Avater" />
           <div className="container-edit-icon">
@@ -281,6 +280,6 @@ export default function Setting() {
           loading={loading}
         />
       )}
-    </>
+    </section>
   );
 }

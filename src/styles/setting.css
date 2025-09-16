@@ -4,22 +4,11 @@
   align-items: center;
   margin-top: -1rem;
   transition: var(--trans-03);
+  column-gap: .5rem;
 }
 
-.content-title h2 {
-  font-weight: 600;
-  font-size: 2rem;
-  line-height: 41.6px;
-  color: var(--chat-text);
-  transition: var(--trans-03);
-}
-
-.content-title p {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 27px;
-  color: var(--text-color);
-  transition: var(--trans-03);
+.setting-title .header-container {
+  flex: 1;
 }
 
 .avater {
@@ -378,16 +367,6 @@ input[type="file"]::-webkit-file-upload-button {
 
   .setting-title {
     align-items: start;
-  }
-
-  .content-title h2 {
-    font-size: 1.5rem;
-    line-height: normal;
-  }
-
-  .content-title p {
-    font-size: 14px;
-    line-height: normal;
   }
 
   .setting-body form .mes-error {

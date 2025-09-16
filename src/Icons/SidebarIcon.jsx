@@ -1,7 +1,7 @@
 export default function SidebarIcon() {
   return (
     <svg
-      className="icon"
+      className="icon logo-icon"
       width="60"
       height="60"
       viewBox="0 0 60 60"

@@ -11,7 +11,7 @@
 }
 
 .gpa-calculator .btn-add {
-  margin-left: 0px;
+  margin-inline-start: 0px;
 }
 
 .add-task label {

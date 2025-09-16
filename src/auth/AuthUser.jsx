@@ -34,6 +34,11 @@ const AuthProvider = ({ children }) => {
   const scrollRef = useRef(null);
   const chatContainerRef = useRef(null);
   const { setTheme } = useTheme();
+  const [openSidebar, setOpenSidebar] = useState(true);
+
+  const handleShowSidebar = () => {
+    setOpenSidebar(!openSidebar);
+  };
 
   const login = async (userData) => {
     try {
@@ -296,6 +301,9 @@ const AuthProvider = ({ children }) => {
     scrollQuestion,
     getFileViewURL,
     chatContainerRef,
+    handleShowSidebar,
+    openSidebar,
+    setOpenSidebar,
   };
   return <AuthUser.Provider value={values}>{children}</AuthUser.Provider>;
 };

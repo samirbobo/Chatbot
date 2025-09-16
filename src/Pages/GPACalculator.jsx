@@ -3,6 +3,7 @@ import "../styles/gpaCalculator.css";
 import DeleteIcon from "../Icons/DeleteIcon";
 import AlertModel from "../components/AlertModel";
 import { useTranslation } from "react-i18next";
+import HeaderPage from "../components/HeaderPage";
 
 export default function GPACalculator() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -150,10 +151,11 @@ export default function GPACalculator() {
 
   return (
     <section className="gpa-calculator">
-      <article className="content-title div-tittle">
-        <h2>{t("gpaCalculator")}</h2>
-        <p>{t("gpaToolDescription")}</p>
-      </article>
+      <HeaderPage
+        title={"gpaCalculator"}
+        subTitle={"gpaToolDescription"}
+        className={"div-tittle"}
+      />
 
       <div className="adding">
         <form onSubmit={handleSubmit} className="add-task">

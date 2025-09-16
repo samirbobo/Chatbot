@@ -1,13 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { UseGlobalUser } from "../auth/AuthUser";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
 
 export default function PrivateRoute() {
-  const [openSidebar, setOpenSidebar] = useState(true);
-  const handleShowSidebar = () => {
-    setOpenSidebar(!openSidebar);
-  };
+  const { openSidebar, handleShowSidebar } = UseGlobalUser();
   const { user } = UseGlobalUser();
 
   if (!user) {
@@ -20,6 +16,14 @@ export default function PrivateRoute() {
         handleShowSidebar={handleShowSidebar}
         openSidebar={openSidebar}
       />
+
+      {openSidebar && (
+        <div
+          className={`overlay ${openSidebar && "active"}`}
+          onClick={handleShowSidebar}
+        ></div>
+      )}
+
       <main className={`main-section ${openSidebar && "active"}`}>
         <Outlet />
       </main>

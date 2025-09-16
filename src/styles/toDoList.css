@@ -24,7 +24,7 @@ ul {
 }
 
 .div-tittle {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .min-tittle {
@@ -317,7 +317,7 @@ ul {
 
 @media (max-width: 768px) {
   .btn-add {
-    margin-left: 1rem;
+    margin-inline-start: 1rem;
   }
 }
 
@@ -341,7 +341,7 @@ ul {
 
   .to-do-list .btn-add {
     width: 100%;
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   .bar-tasks {
@@ -372,6 +372,7 @@ ul {
   right: 0;
   left: 0;
   z-index: 999;
+  cursor: auto;
 }
 
 .allert {

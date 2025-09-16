@@ -13,6 +13,7 @@ import {
 import { UseGlobalUser } from "../auth/AuthUser";
 import ErrorAlert from "../components/ErrorAlert";
 import { useTranslation } from "react-i18next";
+import HeaderPage from "../components/HeaderPage";
 
 export default function ToDoList() {
   const { user } = UseGlobalUser();
@@ -250,10 +251,12 @@ export default function ToDoList() {
 
   return (
     <section className="to-do-list">
-      <div className="div-tittle">
-        <h2 className="tittle">{t("todoList")}</h2>
-        <span className="min-tittle">{t("enterTask")}</span>
-      </div>
+      <HeaderPage
+        title={"todoList"}
+        subTitle={"enterTask"}
+        className="div-tittle"
+      />
+
       <div className="adding">
         <h5 className="add-tittle">{t("addNewTask")}</h5>
         <form onSubmit={handleSubmit} className="add-task">

@@ -125,15 +125,13 @@ const AuthProvider = ({ children }) => {
     if (number === "one") {
       response +=
         "If the answer is wrong, rephrase the question more accurately or make sure the question is written correctly";
-      // response = response.replace(/(Gemini|Gemine)/gi, "EduGuide");
-      // response = response.replace(/Google/gi, "<b>Ahmed and Eslam</b>");
-      response = response.replace(
-        /\n\n\* \*\*(.*?)\*\*/g,
-        "<br/><br />- <b>$1</b>"
-      );
-      response = response.replace(/\* \*\*(.*?)\*\*/g, "<br/><br/>- <b>$1</b>");
+      response = response.replace(/(Gemini|Gemine)/gi, "EduGuide");
 
-      response = response.replace(/\*\*(.*?)\*\*\n\n/g, "<b>$1</b><br/><br/>");
+      // Replace Markdown headers ### with bold HTML titles
+      response = response.replace(/### (.*)/g, "<br/><br/><b>$1</b>");
+
+      // Replace horizontal rules --- with <hr> for separation
+      response = response.replace(/^---$/gm, "<hr/>");
 
       response = response.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
       // Condition 3: If there is \n\n, only one new line is published and the words are placed in it

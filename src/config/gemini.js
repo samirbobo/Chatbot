@@ -1,56 +1,49 @@
-import {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
 const MODEL_NAME = "gemini-2.5-flash";
-const API_KEY = "AIzaSyD4G8M6nSRNFwvx0UBuTDEonVbqT_9QeD0";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 async function runChat(prompt) {
   try {
     // Initialize Generative AI
-    const generativeAI = new GoogleGenerativeAI(API_KEY);
-    const model = generativeAI.getGenerativeModel({ model: MODEL_NAME });
-
-    // Generation configuration
-    const generationConfig = {
-      temperature: 0.9,
-      topK: 1,
-      topP: 1,
-      maxOutputTokens: 2048,
-    };
+    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
     // Safety settings
     const safetySettings = [
-      {
-        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-      },
-    ];
-
-    // Start chat
-    const chat = model.startChat({
-      generationConfig,
-      safetySettings,
-      history: [],
-    });
+        {
+          category: "HARM_CATEGORY_HARASSMENT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE",
+        },
+        {
+          category: "HARM_CATEGORY_HATE_SPEECH",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE",
+        },
+        {
+          category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE",
+        },
+        {
+          category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE",
+        },
+      ]
 
     // Send message and return response
-    const result = await chat.sendMessage(prompt);
-    return result.response.text();
+    const response = await ai.models.generateContent({
+      model: MODEL_NAME,
+      contents: prompt,
+      generationConfig: {
+        temperature: 0.5,
+        topK: 10,
+        topP: 0.9,
+        maxOutputTokens: 1000,
+      },
+      safetySettings: safetySettings,
+    });
+
+    console.log(response.text)
+
+    return response.text;
   } catch (error) {
     console.error("Error running chat:", error);
     throw error; // Rethrow the error for handling by the caller
